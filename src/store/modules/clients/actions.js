@@ -23,6 +23,29 @@ export default {
             ...clientData
         });
     },
+    // async updateClient(context,data){
+    //     const clientId = data;
+    //     const clientData = {
+    //         name: data.name,
+    //         address: data.address,
+    //         phone: data.phone,
+    //         contactPerson: data.contactPerson,
+    //         status: data.status
+    //     }
+    //     const response = await fetch(
+    //         `https://cleanertrackpro-default-rtdb.firebaseio.com/clients/${clientId}.json`,
+    //         {
+    //             method: 'PUT',
+    //             body: JSON.stringify(clientData)
+    //         }
+    //     )
+    //     if (!response.ok) {
+    //         const error = new Error(response.message || 'Failed.Try Later');
+    //         throw error;
+    //     }
+    //
+    //     context.commit('updateClients');
+    // },
     async loadClients(context){
         const response = await fetch(
             'https://cleanertrackpro-default-rtdb.firebaseio.com/clients.json',
