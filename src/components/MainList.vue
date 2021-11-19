@@ -3,31 +3,31 @@
     <wrapper>
       <li>
         <h2>Clients</h2>
-        <router-link to="/clients">Edit</router-link>
+        <link-button mode="flat" link to="/clients">Edit</link-button>
       </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Worksites</h2>
-        <router-link to="/worksites">Edit</router-link>
+        <link-button mode="flat" link to="/worksites">Edit</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Employees</h2>
-        <router-link to="/employees">Edit</router-link>
+        <link-button mode="flat" link to="/employees">Edit</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Equipment</h2>
-        <router-link to="/equipment">Edit</router-link>
+        <link-button mode="flat" link to="/equipment">Edit</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Jobs</h2>
-        <router-link to="/jobs">Edit</router-link>
+        <link-button mode="flat" link to="/jobs">Edit</link-button>
         </li>
     </wrapper>
   </ul>
@@ -48,6 +48,7 @@ ul{
 li{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 50px;
 }
 h2{

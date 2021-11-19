@@ -54,18 +54,26 @@ button:active {
 
 .flat {
   background-color: transparent;
-  color: #3a0061;
-  border: none;
+  color: black;
+  box-shadow: inset 0 0 rgb(63, 123, 252);
+  transition: all 0.3s ease-out;
+  font-size: 1.5em;
+  min-width: 150px;
+  text-align: center;
 }
 
+.flat:hover,
+.flat:active{
+  box-shadow: inset 12em 0 #3F7BFCFF;
+  cursor: pointer;
+  color: white;
+}
 .outline {
   background-color: transparent;
   border-color: #270041;
   color: #270041;
 }
 
-.flat:hover,
-.flat:active,
 .outline:hover,
 .outline:active {
   background-color: #edd2ff;
