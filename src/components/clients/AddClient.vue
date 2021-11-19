@@ -94,6 +94,13 @@ export default {
         status: this.status.val
       }
       this.$store.dispatch('addClient', formData);
+      this.$store.dispatch('loadClients');
+
+      this.fullName.val = '';
+      this.address.val = {};
+      this.phone.val = null;
+      this.contactPerson.val = '';
+      this.status.val = '';
     }
   }
 }
