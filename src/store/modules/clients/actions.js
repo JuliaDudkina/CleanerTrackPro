@@ -45,7 +45,7 @@ export default {
                 contactPerson: responseData[key].contactPerson,
                 status: responseData[key].status,
             };
-            clients.push(client);
+            clients.unshift(client);
         }
         context.commit('setClients',clients);
     },
