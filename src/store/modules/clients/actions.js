@@ -48,5 +48,21 @@ export default {
             clients.push(client);
         }
         context.commit('setClients',clients);
-    }
+    },
+    async deleteClient(context,data){
+        const clientId = data;
+
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/clients/${clientId}.json`,
+            {
+                method: 'DELETE'
+            }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+
+        context.commit('deleteClient', clientId);
+    },
 };

@@ -8,6 +8,7 @@
       <client-details
           v-for="client in clients"
           :key="client.id"
+          :id="client.id"
           :name="client.name"
           :address="client.address"
           :phone="client.phone"
