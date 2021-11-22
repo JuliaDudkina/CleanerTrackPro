@@ -1,6 +1,7 @@
 <template>
   <wrapper>
     <form @submit.prevent="submitData">
+      <h2>Register a new client</h2>
       <div class="form-control">
         <label for="name">Full Name</label>
         <input type="text" id="name" required v-model.trim="fullName.val">
