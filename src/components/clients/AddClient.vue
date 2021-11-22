@@ -157,5 +157,6 @@ h3 {
 }
 .flex{
   display: flex;
+  align-items: baseline;
 }
 </style>
