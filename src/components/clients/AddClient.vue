@@ -1,58 +1,62 @@
 <template>
-  <form @submit.prevent="submitData">
-    <div class="form-control">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" required v-model.trim="fullName.val">
-    </div>
-    <div class="form-control">
-      <label>Address</label>
-      <div class="flex">
-        <div>
-          <label for="city">City</label>
-          <input type="text" id="city" required v-model.trim="address.val.city">
+  <wrapper>
+    <form @submit.prevent="submitData">
+      <div class="form-control">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required v-model.trim="fullName.val">
+      </div>
+      <div class="form-control">
+        <label>Address</label>
+        <div class="flex">
+          <div>
+            <label for="city">City</label>
+            <input type="text" id="city" required v-model.trim="address.val.city">
+          </div>
+          <div>
+            <label for="street">Street</label>
+            <input type="text" id="street" required v-model.trim="address.val.street">
+          </div>
         </div>
-        <div>
-          <label for="street">Street</label>
-          <input type="text" id="street" required v-model.trim="address.val.street">
+        <div class="flex">
+          <div>
+            <label for="house">House</label>
+            <input type="number" id="house" required v-model.number="address.val.house">
+          </div>
+          <div>
+            <label for="flat">Flat</label>
+            <input type="number" id="flat" v-model.number="address.val.flat">
+          </div>
+          <div>
+            <label for="index">Index</label>
+            <input type="number" id="index" v-model.number="address.val.index">
+          </div>
         </div>
       </div>
-      <div class="flex">
-        <div>
-          <label for="house">House</label>
-          <input type="number" id="house" required v-model.number="address.val.house">
-        </div>
-        <div>
-          <label for="flat">Flat</label>
-          <input type="number" id="flat" v-model.number="address.val.flat">
-        </div>
-        <div>
-          <label for="index">Index</label>
-          <input type="number" id="index" v-model.number="address.val.index">
-        </div>
+      <div class="form-control">
+        <label for="phone">Contact Phone</label>
+        <input type="tel" id="phone" v-model.number="phone.val">
       </div>
-    </div>
-    <div class="form-control">
-      <label for="phone">Contact Phone</label>
-      <input type="tel" id="phone" v-model.number="phone.val">
-    </div>
-    <div class="form-control">
-      <label for="person">Contact Person</label>
-      <input type="text" id="person" v-model.trim="contactPerson.val">
-    </div>
-    <div class="flex">
-      <label>You are:</label>
-      <select v-model="status.val">
-        <option value="corporate">a company</option>
-        <option value="individual">an individual</option>
-      </select>
-    </div>
-    <link-button>Submit</link-button>
-  </form>
+      <div class="form-control">
+        <label for="person">Contact Person</label>
+        <input type="text" id="person" v-model.trim="contactPerson.val">
+      </div>
+      <div class="flex">
+        <label>You are:</label>
+        <select v-model="status.val">
+          <option value="corporate">a company</option>
+          <option value="individual">an individual</option>
+        </select>
+      </div>
+      <link-button>Submit</link-button>
+    </form>
+  </wrapper>
 </template>
 
 <script>
+import Wrapper from "../UI/Wrapper";
 export default {
   name: "AddClient",
+  components: {Wrapper},
   data(){
     return{
       fullName: {
@@ -95,6 +99,7 @@ export default {
       }
       this.$store.dispatch('addClient', formData);
       this.$store.dispatch('loadClients');
+      this.$router.replace("/clients");
 
       this.fullName.val = '';
       this.address.val = {};
@@ -132,19 +137,9 @@ input{
 }
 
 input:focus{
-  background-color: #f0e6fd;
+  background-color: #e6fdfb;
   outline: none;
-  border-color: #3d008d;
-}
-
-input[type='checkbox'] {
-  display: inline;
-  width: auto;
-  border: none;
-}
-
-input[type='checkbox']:focus {
-  outline: #3d008d solid 1px;
+  border-color: #0d520d;
 }
 
 h3 {
@@ -156,8 +151,7 @@ h3 {
   color: red;
 }
 
-.invalid input,
-.invalid textarea {
+.invalid input{
   border: 1px solid red;
 }
 .flex{

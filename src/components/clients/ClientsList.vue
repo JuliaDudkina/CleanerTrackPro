@@ -1,8 +1,8 @@
 <template>
   <div>
-    <link-button class="add-client" @click="showForm">{{ buttonText }}</link-button>
-    <wrapper v-if="isVisible">
-      <add-client></add-client>
+    <wrapper class="header">
+      <h1>Clients</h1>
+      <link-button link to="/clients/register">Add New Client</link-button>
     </wrapper>
     <router-view>
       <client-details
@@ -21,36 +21,19 @@
 
 <script>
 import ClientDetails from "./ClientDetails";
-import AddClient from "./AddClient";
 import Wrapper from "../UI/Wrapper";
 export default {
   name: "ClientsList",
   components:{
     Wrapper,
     ClientDetails,
-    AddClient
-  },
-  data(){
-    return{
-      isVisible: false
-    }
   },
   computed:{
-    buttonText(){
-      if(!this.isVisible){
-        return "Add New Client"
-      } else{
-        return "Hide Form"
-      }
-    },
     clients(){
       return this.$store.getters['clients'];
     }
   },
   methods:{
-    showForm(){
-        this.isVisible = !this.isVisible;
-    },
     async loadClients() {
       try {
         await this.$store.dispatch('loadClients');
@@ -66,13 +49,10 @@ export default {
 </script>
 
 <style scoped>
-div{
-  padding: 50px;
-  position: relative;
-}
-.add-client{
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: none;
 }
 </style>
