@@ -14,8 +14,8 @@
         </div>
       </div>
       <div>
-        <link-button @click="updateClient">Update</link-button>
-        <link-button @click="deleteClient">Delete</link-button>
+<!--        <link-button @click="updateEmployee">Update</link-button>-->
+        <link-button @click="deleteEmployee">Delete</link-button>
       </div>
     </wrapper>
   </li>
@@ -26,7 +26,7 @@ export default {
   name: "EmployeesDetails",
   props: ['id','name', 'phone', 'salary', 'birthDate', 'address'],
   methods:{
-    deleteClient(){
+    deleteEmployee(){
       const clientId = this.id;
       this.$store.dispatch('deleteEmployee', clientId);
     },

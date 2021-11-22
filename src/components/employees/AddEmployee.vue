@@ -1,6 +1,6 @@
 <template>
   <wrapper>
-    <form @submit="submitData">
+    <form @submit.prevent="submitData">
       <h2>Register a new employee</h2>
       <div class="form-control">
         <label for="name">Full Name</label>
