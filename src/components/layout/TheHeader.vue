@@ -6,13 +6,33 @@
           CleanerTrackPro
         </router-link>
       </h1>
+      <ul>
+        <li>
+          <link-button v-if="!isAuthenticated" link to="/auth">
+            Log in/Sign up
+          </link-button>
+          <link-button v-if="isAuthenticated" link to="/" @click="logout">
+            Log out
+          </link-button>
+        </li>
+      </ul>
     </nav>
   </header>
 </template>
 
 <script>
 export default {
-  name: "TheHeader"
+  name: "TheHeader",
+  computed:{
+    isAuthenticated(){
+      return this.$store.getters.isAuthenticated;
+    },
+  },
+  methods: {
+    logout(){
+      this.$store.dispatch('logout');
+    }
+  }
 }
 </script>
 
@@ -28,7 +48,7 @@ header {
 
 header a {
   text-decoration: none;
-  color: #f391e3;
+  color: white;
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
@@ -37,7 +57,7 @@ header a {
 a:active,
 a:hover,
 a.router-link-active {
-  border: 1px solid #f391e3;
+  border: 1px solid white;
 }
 
 h1 {
