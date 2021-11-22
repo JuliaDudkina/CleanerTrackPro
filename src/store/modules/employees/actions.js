@@ -66,5 +66,17 @@ export default {
             throw error;
         }
         context.commit('deleteEmployee', employeeId);
+    },
+    async loadNames(context){
+        const response = await fetch(
+            'https://cleanertrackpro-default-rtdb.firebaseio.com/employees.json'
+        );
+        const responseData = await response.json();
+        let employeeNames = [];
+        for (const key in responseData) {
+            const employeeName = responseData[key].name;
+            employeeNames.push(employeeName);
+        }
+        context.commit('setNames', employeeNames);
     }
 }

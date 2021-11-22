@@ -6,7 +6,10 @@ export default {
         state.employees.unshift(payload);
     },
     deleteEmployee(state,payload) {
-        const resIndex = state.employees.findIndex( client => client.id === payload);
+        const resIndex = state.employees.findIndex( employee => employee.id === payload);
         state.employees.splice(resIndex,1);
+    },
+    setNames(state,payload){
+        state.names = payload;
     }
 }
