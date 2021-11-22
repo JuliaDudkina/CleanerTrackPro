@@ -1,23 +1,32 @@
 import {createRouter, createWebHistory} from "vue-router";
 import MainList from "./components/MainList";
 import ClientsList from "./components/clients/ClientsList";
+import Auth from "./components/Auth";
+import EmployeesList from "./components/employees/EmployeesList";
+import AddEmployee from "./components/employees/AddEmployee";
 import AddClient from "./components/clients/AddClient";
+import AddEquipment from "./components/equipment/AddEquipment";
+import EquipmentList from "./components/equipment/EquipmentList";
+import JobsList from "./components/jobs/JobsList";
+import AddJob from "./components/jobs/AddJob";
+import WorksitesList from "./components/worksites/WorksitesList";
+import AddWorksite from "./components/worksites/AddWorksite";
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {path: '/', component: MainList},
-        {
-            path: '/clients',
-            component: ClientsList,
-            children: [
-                {path: 'register', component: AddClient},
-            ],
-        },
-        {path: '/worksites', component: null},
-        {path: '/employees', component: null},
-        {path: '/equipment', component: null},
-        {path: '/jobs', component: null},
+        {path: '/clients', component: ClientsList},
+        {path: '/clients/register', component: AddClient},
+        {path: '/jobs', component: JobsList},
+        {path: '/jobs/register', component: AddJob},
+        {path: '/employees', component: EmployeesList},
+        {path: '/employees/register', component: AddEmployee},
+        {path: '/equipment', component: EquipmentList},
+        {path: '/equipment/register', component: AddEquipment},
+        {path: '/worksites', component: WorksitesList},
+        {path: '/worksites/register', component: AddWorksite},
+        {path: '/auth', component: Auth},
     ]
 });
 
