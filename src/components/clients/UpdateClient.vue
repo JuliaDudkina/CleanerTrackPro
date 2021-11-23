@@ -103,9 +103,9 @@ export default {
         contactPerson: this.contactPerson.val,
         status: this.status.val,
       };
-      this.$store.dispatch('updateClient', updatedClient);
-       await this.$store.dispatch('loadClients');
-      this.$router.replace('/clients');
+      await this.$store.dispatch('updateClient', updatedClient);
+      await this.$store.dispatch('loadClients');
+      await this.$router.replace('/clients');
     }
   }
 }

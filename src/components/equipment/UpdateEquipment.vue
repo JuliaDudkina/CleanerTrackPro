@@ -51,9 +51,9 @@ export default {
         fee: this.fee.val,
         storage: this.storage.val,
       }
-      this.$store.dispatch('updateItem',updatedItem);
+      await this.$store.dispatch('updateItem',updatedItem);
       await this.$store.dispatch('loadEquipment');
-      this.$router.replace("/equipment");
+      await this.$router.replace("/equipment");
     }
   }
 }

@@ -65,7 +65,7 @@ export default {
     }
   },
   methods:{
-    update(){
+    async update(){
       const updatedEmployee = {
         name: this.fullName.val,
         phone: this.phone.val,
@@ -73,9 +73,9 @@ export default {
         birthDate: this.birthDate.val,
         address: this.address.val,
       }
-      this.$store.dispatch('updateEmployee', updatedEmployee);
-      this.$store.dispatch('loadEmployees');
-      this.$router.replace("/employees");
+      await this.$store.dispatch('updateEmployee', updatedEmployee);
+      await this.$store.dispatch('loadEmployees');
+      await this.$router.replace("/employees");
     }
   }
 }
