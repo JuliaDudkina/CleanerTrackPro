@@ -24,51 +24,31 @@
       <link-button @click="deleteClient">Delete</link-button>
     </div>
   </wrapper>
-  <teleport to="body" v-if="dialogVisible">
-    <div class="empty"></div>
-    <dialog open>
-      <wrapper>
-        <button class="close" @click="closeDialog">Close</button>
-        <add-client></add-client>
-      </wrapper>
-    </dialog>
-  </teleport>
 </template>
 
 <script>
-import AddClient from "./AddClient";
 import Wrapper from "../UI/Wrapper";
 export default {
   name: "ClientDetails",
-  components: {Wrapper, AddClient},
+  components: {Wrapper},
   props: ['id','name','address', 'phone', 'contactPerson', 'status'],
-  data(){
-    return{
-      dialogVisible: false,
-    }
-  },
   methods:{
     deleteClient(){
       const clientId = this.id;
       this.$store.dispatch('deleteClient', clientId);
     },
-    // updateClient(){
-    //   this.dialogVisible = !this.dialogVisible;
-    //   const oldData = {
-    //     name: this.name,
-    //     address: this.address,
-    //     phone: this.phone,
-    //     contactPerson: this.contactPerson,
-    //     status: this.status,
-    //   }
-    //   console.log(oldData);
-    //   // const clientId = this.id;
-    //   this.$emit('update-client',oldData)
-    //   // this.$store.dispatch('updateClient', clientId);
-    // },
-    // closeDialog(){
-    //   this.dialogVisible = false;
-    // }
+    updateClient(){
+      const client = {
+        id: this.id,
+        name: this.name,
+        address: this.address,
+        phone: this.phone,
+        contactPerson: this.contactPerson,
+        status: this.status,
+      }
+      this.$store.dispatch('setClient', client);
+      this.$router.replace('/clients/update');
+    }
   }
 }
 </script>

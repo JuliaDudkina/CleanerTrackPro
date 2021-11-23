@@ -8,6 +8,7 @@ export default {
         return{
             lastFetch: null,
             clients: [],
+            client: {},
         }
     },
     mutations,
