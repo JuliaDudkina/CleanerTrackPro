@@ -4,5 +4,8 @@ export default {
     },
     item(state){
         return state.item;
-    }
+    },
+    itemNames(state){
+        return state.itemNames;
+    },
 }

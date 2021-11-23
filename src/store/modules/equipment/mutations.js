@@ -11,5 +11,8 @@ export default {
     },
     setItem(state, payload){
         state.item = payload;
-    }
+    },
+    setItemNames(state,payload){
+        state.itemNames = payload;
+    },
 }

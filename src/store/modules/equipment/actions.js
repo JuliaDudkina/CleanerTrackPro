@@ -84,5 +84,18 @@ export default {
             throw error;
         }
     },
+    async loadItemNames(context){
+        const response = await fetch(
+            'https://cleanertrackpro-default-rtdb.firebaseio.com/equipment.json'
+        );
+        const responseData = await response.json();
+        let itemNames = [];
+        for (const key in responseData) {
+            const itemName = responseData[key].name;
+            itemNames.push(itemName);
+        }
+        context.commit('setItemNames', itemNames);
+    },
+
 
 }
