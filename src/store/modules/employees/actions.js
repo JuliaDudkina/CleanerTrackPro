@@ -78,5 +78,31 @@ export default {
             employeeNames.push(employeeName);
         }
         context.commit('setNames', employeeNames);
-    }
+    },
+    setEmployee(context,data) {
+        const employee = data;
+        context.commit('setEmployee', employee)
+    },
+    async updateEmployee(context, data){
+        const employeeId = context.rootGetters.employee.id;
+        console.log(employeeId);
+        const updatedEmployee = {
+            name: data.name,
+            address: data.address,
+            phone: data.phone,
+            salary: data.salary,
+            birthDate: data.birthDate
+        };
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/employees/${employeeId}.json`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(updatedEmployee)
+            }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+    },
 }

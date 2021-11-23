@@ -11,5 +11,8 @@ export default {
     },
     setNames(state,payload){
         state.names = payload;
+    },
+    setEmployee(state, payload){
+        state.employee = payload;
     }
 }

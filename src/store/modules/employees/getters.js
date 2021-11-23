@@ -4,5 +4,8 @@ export default {
     },
     names(state){
         return state.names;
+    },
+    employee(state){
+        return state.employee;
     }
 }

@@ -7,6 +7,7 @@ export default {
         return{
             employees: [],
             names: [],
+            employee:{},
         }
     },
     getters,

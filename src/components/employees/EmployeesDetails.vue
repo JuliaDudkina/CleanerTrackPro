@@ -14,7 +14,7 @@
         </div>
       </div>
       <div>
-<!--        <link-button @click="updateEmployee">Update</link-button>-->
+        <link-button @click="updateEmployee">Update</link-button>
         <link-button @click="deleteEmployee">Delete</link-button>
       </div>
     </wrapper>
@@ -30,6 +30,18 @@ export default {
       const clientId = this.id;
       this.$store.dispatch('deleteEmployee', clientId);
     },
+    updateEmployee(){
+      const employee = {
+        id: this.id,
+        name: this.name,
+        phone: this.phone,
+        salary: this.salary,
+        birthDate: this.birthDate,
+        address: this.address,
+      }
+      this.$store.dispatch('setEmployee', employee);
+      this.$router.replace('/employees/update');
+    }
   }
 }
 </script>
