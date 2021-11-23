@@ -7,7 +7,7 @@
         <h3>Storage Location: {{ storage }}</h3>
       </div>
       <div>
-<!--        <link-button @click="updateItem">Update</link-button>-->
+        <link-button @click="updateItem">Update</link-button>
         <link-button @click="deleteItem">Delete</link-button>
       </div>
     </wrapper>
@@ -23,6 +23,16 @@ export default {
     deleteItem(){
       const itemId = this.id;
       this.$store.dispatch('deleteEquipment', itemId)
+    },
+    updateItem(){
+      const item = {
+        id: this.id,
+        name: this.name,
+        fee: this.fee,
+        storage: this.storage,
+      }
+      this.$store.dispatch('setItem', item);
+      this.$router.replace('/equipment/update');
     }
   }
 }

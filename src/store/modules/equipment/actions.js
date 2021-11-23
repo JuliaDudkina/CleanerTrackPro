@@ -60,5 +60,29 @@ export default {
         }
 
         context.commit('deleteEquipment', itemId);
-    }
+    },
+    setItem(context,data) {
+        const item = data;
+        context.commit('setItem', item);
+    },
+    async updateItem(context, data){
+        const itemId = context.rootGetters.item.id;
+        const updatedItem = {
+            name: data.name,
+            fee: data.fee,
+            storage: data.storage,
+        };
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/equipment/${itemId}.json`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(updatedItem)
+            }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+    },
+
 }
