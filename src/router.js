@@ -14,6 +14,7 @@ import AddWorksite from "./components/worksites/AddWorksite";
 import UpdateClient from "./components/clients/UpdateClient";
 import UpdateEmployee from "./components/employees/UpdateEmployee";
 import UpdateEquipment from "./components/equipment/UpdateEquipment";
+import UpdateWorksite from "./components/worksites/UpdateWorksite";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -32,6 +33,7 @@ const router = createRouter({
         {path: '/equipment/update', component: UpdateEquipment},
         {path: '/worksites', component: WorksitesList},
         {path: '/worksites/register', component: AddWorksite},
+        {path: '/worksites/update', component: UpdateWorksite},
         {path: '/auth', component: Auth},
     ]
 });
