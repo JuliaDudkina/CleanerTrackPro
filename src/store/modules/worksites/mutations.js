@@ -11,5 +11,8 @@ export default {
     deleteWorksite(state, payload){
         const index = state.worksites.findIndex(item => item.id === payload);
         state.worksites.splice(index, 1);
-    }
+    },
+    loadClientWorksites(state,payload) {
+        state.clientWorksites = payload;
+    },
 }

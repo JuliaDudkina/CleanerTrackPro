@@ -7,6 +7,7 @@ export default {
         return{
             worksites: [],
             oldData: {},
+            clientWorksites: [],
         }
     },
     actions,
