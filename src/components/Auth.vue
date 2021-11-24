@@ -69,7 +69,8 @@ export default {
         } else{
           await this.$store.dispatch('signup', actionPayload);
         }
-        this.$router.replace('/');
+        const redirectUrl = '/' + (this.$route.query.redirect || '');
+        this.$router.replace(redirectUrl);
       }catch (err){
         this.error = err.message || 'Failed to authenticate, try later!';
       }
