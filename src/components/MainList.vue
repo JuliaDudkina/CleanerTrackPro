@@ -3,31 +3,31 @@
     <wrapper>
       <li>
         <h2>Clients</h2>
-        <link-button :class="{disabled: !isAuthenticated}" mode="flat" link to="/clients">Edit</link-button>
+        <link-button mode="flat" link :to="link('/clients')">Edit</link-button>
       </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Worksites</h2>
-        <link-button :class="{disabled: !isAuthenticated}" mode="flat" link to="/worksites">Edit</link-button>
+        <link-button mode="flat" link :to="link('/worksites')">Edit</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Employees</h2>
-        <link-button :class="{disabled: !isAuthenticated}" mode="flat" link to="/employees">Edit</link-button>
+        <link-button mode="flat" link :to="link('/employees')">Edit</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Equipment</h2>
-        <link-button :class="{disabled: !isAuthenticated}" mode="flat" link to="/equipment">Edit</link-button>
+        <link-button mode="flat" link :to="link('/equipment')">Edit</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Jobs</h2>
-        <link-button :class="{disabled: !isAuthenticated}" mode="flat" link to="/jobs">Edit</link-button>
+        <link-button mode="flat" link :to="link('/jobs')">Edit</link-button>
         </li>
     </wrapper>
   </ul>
@@ -41,6 +41,12 @@ export default {
   computed:{
     isAuthenticated(){
       return this.$store.getters.isAuthenticated;
+    },
+  },
+  methods:{
+    link(path){
+      const splicedPath = path.substr(1);
+      return this.isAuthenticated ? path : `/auth?redirect=${splicedPath}`;
     }
   }
 }
@@ -63,8 +69,5 @@ a{
   text-decoration: none;
   margin: 20px 0;
   font-size: 1.5em;
-}
-a.disabled {
-  pointer-events: none;
 }
 </style>
