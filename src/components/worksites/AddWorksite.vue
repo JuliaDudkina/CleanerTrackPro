@@ -17,9 +17,9 @@ export default {
   methods:{
     async saveData(data) {
       const newWorksite = data;
-      this.$store.dispatch('addWorksite', newWorksite);
+      await this.$store.dispatch('addWorksite', newWorksite);
       await this.$store.dispatch('loadWorksites');
-      this.$router.replace('/worksites');
+      await this.$router.replace('/worksites');
     }
   }
 }
