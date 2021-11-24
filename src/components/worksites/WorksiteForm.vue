@@ -35,13 +35,13 @@ export default {
   data(){
     return{
       name: {
-        val: this.oldName
+        val: this.oldName || '',
       },
       address: {
-        val: this.oldAddress
+        val: this.oldAddress || '',
       },
       type: {
-        val: this.oldType
+        val: this.oldType || '',
       },
 
     }
