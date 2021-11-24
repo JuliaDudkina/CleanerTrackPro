@@ -37,10 +37,24 @@ export default {
             const error = new Error(message || 'Failed to authenticate.');
             throw error;
         }
+        localStorage.setItem('token', responseData.idToken);
+        localStorage.setItem('userId', responseData.localId);
+
         context.commit('setUser', {
             token: responseData.idToken,
             userId: responseData.localId,
         });
+    },
+    tryLogin(context) {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+
+        if (token && userId) {
+            context.commit('setUser', {
+                token: token,
+                userId: userId,
+            });
+        }
     },
     async logout(context){
         context.commit('setUser', {
