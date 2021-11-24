@@ -4,6 +4,7 @@ import auth from './modules/auth/index';
 import employees from './modules/employees/index';
 import equipment from './modules/equipment/index';
 import worksites from './modules/worksites/index'
+import jobs from'./modules/jobs/index';
 
 const store = createStore({
     modules:{
@@ -11,7 +12,8 @@ const store = createStore({
         auth,
         employees,
         equipment,
-        worksites
+        worksites,
+        jobs
     }
 })
 

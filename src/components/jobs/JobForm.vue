@@ -55,30 +55,31 @@
 <script>
 export default {
   name: "JobForm",
+  props: ['oldStartDate', 'oldType', 'oldEndDate', 'oldHazard', 'oldFee', 'oldChosenEmployee', 'oldEquipment'],
   data(){
     return{
       startDate:{
-        val: '',
+        val: this.oldStartDate || '',
         isValid: true,
       },
       type:{
-        val: '',
+        val: this.oldType || '',
         isValid: true,
       },
       endDate:{
-        val: '',
+        val: this.oldEndDate || '',
         isValid: true,
       },
       hazard:{
-        val: false,
+        val: this.oldHazard || false,
         isValid: true,
       },
       fee:{
-        val: null,
+        val: this.oldFee || null,
         isValid: true,
       },
-      chosenEmployee: '',
-      equipment: [],
+      chosenEmployee: this.oldChosenEmployee || '',
+      equipment: this.oldEquipment || [],
     }
   },
   computed:{
@@ -114,6 +115,7 @@ export default {
         chosenEmployee: this.chosenEmployee,
         equipment: this.equipment,
       }
+      console.log(newJob);
       this.$emit('action',newJob);
     }
   },
