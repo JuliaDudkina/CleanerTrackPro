@@ -1,43 +1,24 @@
 <template>
-  <wrapper>
-    <form @submit.prevent="update">
+  <equipment-form @action="update"
+    :old-fee="item.fee"
+    :old-name="item.name"
+    :old-storage="item.storage"
+  >
+    <template v-slot:title>
       <h2>Update this piece of equipment</h2>
-      <div class="form-control">
-        <label for="name">Name:</label>
-        <input type="text" id="name" required v-model.trim="name.val" :placeholder="item.name">
-      </div>
-      <div class="form-control flex">
-        <label for="fee">Service Fee: $</label>
-        <input type="number" id="fee" v-model="fee.val" :placeholder="item.fee">
-      </div>
-      <div class="form-control">
-        <label for="storage">Storage location:</label>
-        <input type="text" id="storage" v-model="storage.val" :placeholder="item.storage">
-      </div>
+    </template>
+    <template v-slot:button>
       <link-button>Update</link-button>
-    </form>
-  </wrapper>
-
+    </template>
+  </equipment-form>
 </template>
 
 <script>
+import EquipmentForm from "./EquipmentForm";
 export default {
   name: "AddEquipment",
-  data(){
-    return{
-      name:{
-        val: '',
-        isValid: true
-      },
-      fee:{
-        val: null,
-        isValid: true,
-      },
-      storage:{
-        val: '',
-        isValid: true
-      },
-    }
+  components:{
+    EquipmentForm
   },
   computed:{
     item(){
@@ -45,11 +26,11 @@ export default {
     }
   },
   methods:{
-    async update(){
+    async update(data){
       const updatedItem = {
-        name: this.name.val,
-        fee: this.fee.val,
-        storage: this.storage.val,
+        name: data.name,
+        fee: data.fee,
+        storage: data.storage,
       }
       await this.$store.dispatch('updateItem',updatedItem);
       await this.$store.dispatch('loadEquipment');
@@ -58,35 +39,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.form-control {
-  margin: 0.5rem 0;
-}
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-input{
-  display: block;
-  width: 100%;
-  border: 1px solid #ccc;
-  font: inherit;
-}
-
-input:focus{
-  background-color: #e6fdfb;
-  outline: none;
-  border-color: #0d520d;
-}
-
-input[type='number'] {
-  width: 30%;
-}
-.flex{
-  display: flex;
-  align-items: baseline;
-}
-</style>
