@@ -92,6 +92,8 @@ export default {
             const worksite ={
                 id: key,
                 name: responseData[key].name,
+                address: responseData[key].address,
+                type: responseData[key].type,
                 clientId: responseData[key].clientId,
             }
             if(worksite.clientId === id){

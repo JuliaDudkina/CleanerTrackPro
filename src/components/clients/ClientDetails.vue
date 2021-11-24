@@ -20,6 +20,7 @@
       </div>
     </div>
     <div class="actions">
+      <link-button @click="loadWorksites">Worksites</link-button>
       <link-button @click="updateClient">Update</link-button>
       <link-button @click="deleteClient">Delete</link-button>
     </div>
@@ -48,6 +49,15 @@ export default {
       }
       this.$store.dispatch('setClient', client);
       this.$router.replace('/clients/update');
+    },
+    async loadWorksites(){
+      const clientId = this.id;
+      try {
+        await this.$store.dispatch('loadClientWorksites', clientId);
+        this.$router.replace('/clients/worksites');
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
     }
   }
 }
