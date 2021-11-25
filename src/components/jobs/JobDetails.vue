@@ -28,7 +28,7 @@
           <h3>Employee:</h3>
           <p> {{ employee }}</p>
         </div>
-        <div class="flex">
+        <div class="flex" v-if="equipment">
           <h3>Equipment:</h3>
           <ul>
             <li v-for="item in equipment"

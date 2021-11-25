@@ -2,9 +2,9 @@
   <wrapper>
     <form @submit.prevent="action">
       <slot name="title"></slot>
-      <div class="flex">
+      <div class="flex" :class="{invalid: !type.isValid}">
         <label>Type of work:</label>
-        <select v-model="type.val">
+        <select v-model="type.val" @blur="clearValidity('type')">
           <option value="Office cleaning">Office cleaning</option>
           <option value="Home cleaning">Home cleaning</option>
           <option value="Deep cleaning">Deep cleaning</option>
@@ -13,26 +13,26 @@
         </select>
       </div>
       <div class="flex">
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !startDate.isValid}">
           <label for="startDate">Start Date</label>
-          <input type="date" id="startDate" v-model="startDate.val">
+          <input type="date" id="startDate" v-model="startDate.val" @blur="clearValidity('startDate')">
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !endDate.isValid}">
           <label for="endDate">End Date</label>
-          <input type="date" id="endDate" v-model="endDate.val">
+          <input type="date" id="endDate" v-model="endDate.val" @blur="clearValidity('endDate')">
         </div>
       </div>
       <div class="form-control flex">
         <label for="hazard">Hazardous materials</label>
-        <input type="checkbox" id="hazard" value="hazard" v-model="hazard.val">
+        <input type="checkbox" id="hazard" value="hazard" v-model="hazard">
       </div>
-      <div class="form-control flex">
+      <div class="form-control flex" :class="{invalid: !fee.isValid}">
         <label for="fee">Service Fee: $</label>
-        <input type="number" id="fee" v-model="fee.val">
+        <input type="number" id="fee" v-model="fee.val" @blur="clearValidity('fee')">
       </div>
-      <div class="form-control flex">
+      <div class="form-control flex" :class="{invalid: !chosenEmployee.isValid}">
         <label>Choose an employee:</label>
-        <select v-model="chosenEmployee">
+        <select v-model="chosenEmployee.val" @blur="clearValidity('chosenEmployee')">
           <option v-for="name in names" :key="name">
             {{ name}}
           </option>
@@ -70,15 +70,15 @@ export default {
         val: this.oldEndDate || '',
         isValid: true,
       },
-      hazard:{
-        val: this.oldHazard || false,
-        isValid: true,
-      },
+      hazard: this.oldHazard || false,
       fee:{
         val: this.oldFee || null,
         isValid: true,
       },
-      chosenEmployee: this.oldChosenEmployee || '',
+      chosenEmployee:{
+        val: this.oldChosenEmployee || '',
+        isValid: true,
+      },
       equipment: this.oldEquipment || [],
     }
   },
@@ -105,17 +105,46 @@ export default {
         this.error = error.message || 'Something went wrong!';
       }
     },
+    clearValidity(input){
+      this[input].isValid = true;
+    },
+    validateForm(){
+      this.formIsValid = true;
+      if (this.startDate.val === ''){
+        this.startDate.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.endDate.val === ''){
+        this.endDate.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.type.val === ''){
+        this.type.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.chosenEmployee.val === ''){
+        this.chosenEmployee.isValid = false;
+        this.formIsValid = false;
+      }
+      if (!this.fee.val || this.fee.val < 0){
+        this.fee.isValid = false;
+        this.formIsValid = false;
+      }
+    },
     action(){
+      this.validateForm();
+      if (!this.formIsValid){
+        return;
+      }
       const newJob = {
         startDate: this.startDate.val,
         type: this.type.val,
         endDate: this.endDate.val,
-        hazard: this.hazard.val,
+        hazard: this.hazard,
         fee: this.fee.val,
-        chosenEmployee: this.chosenEmployee,
+        chosenEmployee: this.chosenEmployee.val,
         equipment: this.equipment,
       }
-      console.log(newJob);
       this.$emit('action',newJob);
     }
   },
