@@ -6,14 +6,17 @@
         <label for="name">Full Name</label>
         <input type="text" id="name" v-model.trim="fullName.val" @blur="clearValidity('fullName')">
       </div>
+      <p v-if="!fullName.isValid">Name cannot be empty!</p>
       <div class="form-control" :class="{invalid: !phone.isValid}">
         <label for="tel">Phone Number</label>
         <input type="tel" id="tel" v-model.number="phone.val" @blur="clearValidity('phone')">
       </div>
+      <p v-if="!phone.isValid">Phone Number cannot be empty!</p>
       <div class="form-control" :class="{invalid: !address.isValid}">
         <label for="address">Address</label>
         <input type="text" id="address" v-model="address.val" @blur="clearValidity('address')">
       </div>
+      <p v-if="!address.isValid">Address cannot be empty!</p>
       <div class="flex" >
         <div class="form-control" :class="{invalid: !birthDate.isValid}">
           <label for="date">Birth Date</label>
@@ -24,6 +27,8 @@
           <input type="number" id="salary" v-model="salary.val" @blur="clearValidity('salary')">
         </div>
       </div>
+      <p v-if="!birthDate.isValid">Birth Date cannot be empty!</p>
+      <p v-if="!salary.isValid">Salary cannot be empty, zero or less!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -139,7 +144,7 @@ h3 {
   font-size: 1rem;
 }
 
-.invalid label {
+.invalid label, p {
   color: red;
 }
 
