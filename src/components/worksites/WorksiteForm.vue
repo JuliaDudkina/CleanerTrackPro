@@ -6,10 +6,12 @@
         <label for="name">Name:</label>
         <input type="text" id="name" v-model.trim="name.val" @blur="clearValidity('name')">
       </div>
+      <p v-if="!name.isValid"> Name cannot be empty!</p>
       <div class="form-control" :class="{invalid: !address.isValid}">
         <label for="address">Address:</label>
         <input type="text" id="address" v-model.trim="address.val" @blur="clearValidity('address')">
       </div>
+      <p v-if="!address.isValid"> Address cannot be empty!</p>
       <div class=" form-control flex" :class="{invalid: !type.isValid}">
         <label>Type of place:</label>
         <select v-model="type.val" @blur="clearValidity('type')">
@@ -23,6 +25,7 @@
           <option value="Other">Other</option>
         </select>
       </div>
+      <p v-if="!type.isValid"> Please select the type of the worksite!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -114,7 +117,7 @@ input[type='number'] {
   display: flex;
   align-items: baseline;
 }
-.invalid label {
+.invalid label, p {
   color: red;
 }
 
