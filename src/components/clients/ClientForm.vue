@@ -2,52 +2,54 @@
   <wrapper>
     <form @submit.prevent="action">
       <slot name="title"></slot>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !fullName.isValid}">
         <label for="name">Full Name</label>
-        <input type="text" id="name" required v-model.trim="fullName.val">
+        <input type="text" id="name" v-model.trim="fullName.val" @blur="clearValidity('fullName')">
       </div>
       <div class="form-control">
-        <label>Address</label>
+        <label :class="{invalid: !address.isValid}">Address</label>
         <div class="flex">
           <div>
             <label for="city">City</label>
-            <input type="text" id="city" required v-model.trim="address.val.city">
+            <input type="text" id="city" v-model.trim="address.val.city" @blur="clearValidity('address')">
           </div>
           <div>
             <label for="street">Street</label>
-            <input type="text" id="street" required v-model.trim="address.val.street">
+            <input type="text" id="street" v-model.trim="address.val.street" @blur="clearValidity('address')">
           </div>
         </div>
         <div class="flex">
           <div>
             <label for="house">House</label>
-            <input type="number" id="house" required v-model.number="address.val.house">
+            <input type="number" id="house" v-model.number="address.val.house" @blur="clearValidity('address')">
           </div>
           <div>
             <label for="flat">Flat</label>
-            <input type="number" id="flat" v-model.number="address.val.flat">
+            <input type="number" id="flat" v-model.number="address.val.flat" @blur="clearValidity('address')">
           </div>
           <div>
             <label for="index">Index</label>
-            <input type="number" id="index" v-model.number="address.val.index">
+            <input type="number" id="index" v-model.number="address.val.index" @blur="clearValidity('address')">
           </div>
         </div>
+        <p v-if="!address.isValid">All address fields should be completed!</p>
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !phone.isValid}">
         <label for="phone">Contact Phone</label>
-        <input type="tel" id="phone" v-model.number="phone.val">
+        <input type="tel" id="phone" v-model.number="phone.val" @blur="clearValidity('phone')">
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !contactPerson.isValid}">
         <label for="person">Contact Person</label>
-        <input type="text" id="person" v-model.trim="contactPerson.val">
+        <input type="text" id="person" v-model.trim="contactPerson.val" @blur="clearValidity('contactPerson')">
       </div>
-      <div class="flex">
+      <div class="flex" :class="{invalid: !status.isValid}">
         <label>You are:</label>
-        <select v-model="status.val">
+        <select v-model="status.val" @blur="clearValidity('status')">
           <option value="corporate">a company</option>
           <option value="individual">an individual</option>
         </select>
       </div>
+      <p v-if="!formIsValid">Fill in the empty inputs and try again!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -86,12 +88,47 @@ export default {
       status:{
         val: this.oldStatus || '',
         isValid: true
-      }
-
+      },
+      formIsValid: true,
     }
   },
   methods:{
+    clearValidity(input){
+      this[input].isValid = true;
+    },
+    validateForm(){
+      this.formIsValid = true;
+      if (this.fullName.val === ''){
+        this.fullName.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.address.val.city === '' ||
+          this.address.val.street === '' ||
+          !this.address.val.flat ||
+          !this.address.val.house ||
+          !this.address.val.index
+      ){
+        this.address.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.contactPerson.val === ''){
+        this.contactPerson.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.status.val === ''){
+        this.status.isValid = false;
+        this.formIsValid = false;
+      }
+      if (!this.phone.val){
+        this.phone.isValid = false;
+        this.formIsValid = false;
+      }
+    },
     action(){
+      this.validateForm();
+      if (!this.formIsValid){
+        return;
+      }
       const newClient = {
         name: this.fullName.val,
         address: this.address.val,
@@ -141,7 +178,7 @@ h3 {
   font-size: 1rem;
 }
 
-.invalid label {
+.invalid, .invalid label, p {
   color: red;
 }
 
