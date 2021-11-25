@@ -6,9 +6,10 @@
         <label for="name">Full Name</label>
         <input type="text" id="name" v-model.trim="fullName.val" @blur="clearValidity('fullName')">
       </div>
+      <p v-if="!fullName.isValid">Name cannot be empty!</p>
       <div class="form-control">
         <label :class="{invalid: !address.isValid}">Address</label>
-        <div class="flex">
+        <div class="flex" :class="{invalid: !address.isValid}">
           <div>
             <label for="city">City</label>
             <input type="text" id="city" v-model.trim="address.val.city" @blur="clearValidity('address')">
@@ -18,7 +19,7 @@
             <input type="text" id="street" v-model.trim="address.val.street" @blur="clearValidity('address')">
           </div>
         </div>
-        <div class="flex">
+        <div class="flex" :class="{invalid: !address.isValid}">
           <div>
             <label for="house">House</label>
             <input type="number" id="house" v-model.number="address.val.house" @blur="clearValidity('address')">
@@ -38,18 +39,20 @@
         <label for="phone">Contact Phone</label>
         <input type="tel" id="phone" v-model.number="phone.val" @blur="clearValidity('phone')">
       </div>
+      <p v-if="!phone.isValid">Contact Phone cannot be empty!</p>
       <div class="form-control" :class="{invalid: !contactPerson.isValid}">
         <label for="person">Contact Person</label>
         <input type="text" id="person" v-model.trim="contactPerson.val" @blur="clearValidity('contactPerson')">
       </div>
+      <p v-if="!contactPerson.isValid">Contact Person cannot be empty!</p>
       <div class="flex" :class="{invalid: !status.isValid}">
-        <label>You are:</label>
+        <label>Client's status:</label>
         <select v-model="status.val" @blur="clearValidity('status')">
           <option value="corporate">a company</option>
           <option value="individual">an individual</option>
         </select>
       </div>
-      <p v-if="!formIsValid">Fill in the empty inputs and try again!</p>
+      <p v-if="!status.isValid">Please select client's status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
