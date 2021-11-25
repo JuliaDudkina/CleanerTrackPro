@@ -2,17 +2,17 @@
   <wrapper>
     <form @submit.prevent="action">
       <slot name="title"></slot>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !name.isValid}">
         <label for="name">Name:</label>
-        <input type="text" id="name" v-model.trim="name.val">
+        <input type="text" id="name" v-model.trim="name.val" @blur="clearValidity('name')">
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !address.isValid}">
         <label for="address">Address:</label>
-        <input type="text" id="address" v-model.trim="address.val">
+        <input type="text" id="address" v-model.trim="address.val" @blur="clearValidity('address')">
       </div>
-      <div class=" form-control flex">
+      <div class=" form-control flex" :class="{invalid: !type.isValid}">
         <label>Type of place:</label>
-        <select v-model="type.val">
+        <select v-model="type.val" @blur="clearValidity('type')">
           <option value="Office">Office</option>
           <option value="Residential building">Residential building</option>
           <option value="Personal house">Personal house</option>
@@ -36,18 +36,43 @@ export default {
     return{
       name: {
         val: this.oldName || '',
+        isValid: true,
       },
       address: {
         val: this.oldAddress || '',
+        isValid: true,
       },
       type: {
         val: this.oldType || '',
+        isValid: true,
       },
 
     }
   },
   methods:{
+    clearValidity(input){
+      this[input].isValid = true;
+    },
+    validateForm(){
+      this.formIsValid = true;
+      if (this.name.val === ''){
+        this.name.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.address.val === ''){
+        this.address.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.type.val === ''){
+        this.type.isValid = false;
+        this.formIsValid = false;
+      }
+    },
     action(){
+      this.validateForm();
+      if (!this.formIsValid){
+        return;
+      }
       const newWorksite ={
         name: this.name.val,
         address: this.address.val,
@@ -88,5 +113,12 @@ input[type='number'] {
 .flex{
   display: flex;
   align-items: baseline;
+}
+.invalid label {
+  color: red;
+}
+
+.invalid input{
+  border: 1px solid red;
 }
 </style>
