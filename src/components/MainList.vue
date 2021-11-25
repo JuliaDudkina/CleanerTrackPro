@@ -55,6 +55,8 @@ export default {
 <style scoped>
 ul{
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 li{
   display: flex;
@@ -69,5 +71,8 @@ a{
   text-decoration: none;
   margin: 20px 0;
   font-size: 1.5em;
+}
+.wrapper{
+  padding: 0;
 }
 </style>
