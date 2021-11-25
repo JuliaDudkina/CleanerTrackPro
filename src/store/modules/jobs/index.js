@@ -7,6 +7,7 @@ export default {
         return{
             jobs: [],
             oldJob: {},
+            employeesJobs: [],
         }
     },
     actions,

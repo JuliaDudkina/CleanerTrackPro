@@ -16,6 +16,7 @@
       <div>
         <link-button @click="updateEmployee">Update</link-button>
         <link-button @click="deleteEmployee">Delete</link-button>
+        <link-button @click="loadJobs">Jobs</link-button>
       </div>
     </wrapper>
   </li>
@@ -41,6 +42,15 @@ export default {
       }
       this.$store.dispatch('setEmployee', employee);
       this.$router.replace('/employees/update');
+    },
+    async loadJobs(){
+      const employeeName = this.name;
+      try {
+        await this.$store.dispatch('loadEmployeesJobs', employeeName);
+        this.$router.replace('/employees/jobs');
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
     }
   }
 }

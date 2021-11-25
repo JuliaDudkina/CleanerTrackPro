@@ -94,5 +94,32 @@ export default {
             const error = new Error(response.message || 'Failed.Try Later');
             throw error;
         }
-    }
+    },
+    async loadEmployeesJobs(context, payload){
+        const employee = payload;
+        const response = await fetch('https://cleanertrackpro-default-rtdb.firebaseio.com/jobs.json');
+        const responseData = await response.json();
+
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+        let jobs = []
+        for (const key in responseData) {
+            const job ={
+                id: key,
+                startDate: responseData[key].startDate,
+                type: responseData[key].type,
+                endDate: responseData[key].endDate,
+                hazard: responseData[key].hazard,
+                fee: responseData[key].fee,
+                chosenEmployee: responseData[key].chosenEmployee,
+                equipment: responseData[key].equipment,
+            }
+            if(job.chosenEmployee === employee){
+                jobs.unshift(job);
+            }
+        }
+        context.commit('loadEmployeesJobs',jobs);
+    },
 }

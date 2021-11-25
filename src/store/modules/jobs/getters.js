@@ -4,5 +4,8 @@ export default {
     },
     oldJob(state) {
         return state.oldJob;
+    },
+    employeesJobs(state){
+        return state.employeesJobs;
     }
 }

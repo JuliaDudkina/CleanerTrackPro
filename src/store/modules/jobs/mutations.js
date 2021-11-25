@@ -11,5 +11,8 @@ export default {
     },
     setOldJob(state, payload){
         state.oldJob = payload;
-    }
+    },
+    loadEmployeesJobs(state,payload) {
+        state.employeesJobs = payload;
+    },
 }

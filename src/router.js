@@ -18,6 +18,7 @@ import UpdateWorksite from "./components/worksites/UpdateWorksite";
 import UpdateJob from "./components/jobs/UpdateJob";
 import store from "./store";
 import ClientWorksites from "./components/clients/ClientWorksites";
+import EmployeeJobs from "./components/employees/EmployeeJobs";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -33,6 +34,7 @@ const router = createRouter({
         {path: '/employees', component: EmployeesList, meta:{requiresAuth: true}},
         {path: '/employees/register', component: AddEmployee, meta:{requiresAuth: true}},
         {path: '/employees/update', component: UpdateEmployee, meta:{requiresAuth: true}},
+        {path: '/employees/jobs', component: EmployeeJobs, meta:{requiresAuth: true}},
         {path: '/equipment', component: EquipmentList, meta:{requiresAuth: true}},
         {path: '/equipment/register', component: AddEquipment, meta:{requiresAuth: true}},
         {path: '/equipment/update', component: UpdateEquipment, meta:{requiresAuth: true}},
