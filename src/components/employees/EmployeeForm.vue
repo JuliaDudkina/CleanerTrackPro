@@ -2,26 +2,26 @@
   <wrapper>
     <form @submit.prevent="action">
       <slot name="title"></slot>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !fullName.isValid}">
         <label for="name">Full Name</label>
-        <input type="text" id="name" required v-model.trim="fullName.val">
+        <input type="text" id="name" v-model.trim="fullName.val" @blur="clearValidity('fullName')">
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !phone.isValid}">
         <label for="tel">Phone Number</label>
-        <input type="tel" id="tel" required v-model.number="phone.val">
+        <input type="tel" id="tel" v-model.number="phone.val" @blur="clearValidity('phone')">
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !address.isValid}">
         <label for="address">Address</label>
-        <input type="text" id="address" v-model="address.val">
+        <input type="text" id="address" v-model="address.val" @blur="clearValidity('address')">
       </div>
-      <div class="flex">
-        <div class="form-control">
+      <div class="flex" >
+        <div class="form-control" :class="{invalid: !birthDate.isValid}">
           <label for="date">Birth Date</label>
-          <input type="date" id="date" v-model="birthDate.val">
+          <input type="date" id="date" v-model="birthDate.val" @blur="clearValidity('birthDate')">
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !salary.isValid}">
           <label for="salary">Salary</label>
-          <input type="number" id="salary" v-model="salary.val">
+          <input type="number" id="salary" v-model="salary.val" @blur="clearValidity('salary')">
         </div>
       </div>
       <slot name="button"></slot>
@@ -60,7 +60,37 @@ export default {
     }
   },
   methods:{
+    clearValidity(input){
+      this[input].isValid = true;
+    },
+    validateForm(){
+      this.formIsValid = true;
+      if (this.fullName.val === ''){
+        this.fullName.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.address.val === ''){
+        this.address.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.birthDate.val === ''){
+        this.birthDate.isValid = false;
+        this.formIsValid = false;
+      }
+      if (!this.salary.val || this.salary.val < 0){
+        this.salary.isValid = false;
+        this.formIsValid = false;
+      }
+      if (!this.phone.val){
+        this.phone.isValid = false;
+        this.formIsValid = false;
+      }
+    },
     action(){
+      this.validateForm();
+      if (!this.formIsValid){
+        return;
+      }
       const newEmployee = {
         name: this.fullName.val,
         phone: this.phone.val,
