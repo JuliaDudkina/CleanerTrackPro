@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2></h2>
+    <wrapper>
+      <h2>Worksites</h2>
+    </wrapper>
     <ul v-if="clientWorksites.length > 0">
       <worksite-details
           v-for="worksite in clientWorksites"
@@ -20,9 +22,11 @@
 
 <script>
 import WorksiteDetails from "../worksites/WorksiteDetails";
+import Wrapper from "../UI/Wrapper";
 export default {
   name: "ClientWorksites",
   components: {
+    Wrapper,
     WorksiteDetails
   },
   computed: {
@@ -38,5 +42,11 @@ ul{
   list-style: none;
   padding: 0;
   margin: 0;
+}
+.wrapper{
+  box-shadow: none;
+}
+.wrapper h2{
+  text-align: center;
 }
 </style>
