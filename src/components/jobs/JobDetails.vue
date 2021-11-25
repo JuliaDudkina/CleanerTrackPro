@@ -29,7 +29,7 @@
           <p> {{ employee }}</p>
         </div>
         <div class="flex">
-          <h3>Equimpent:</h3>
+          <h3>Equipment:</h3>
           <ul>
             <li v-for="item in equipment"
                 :key="item">
