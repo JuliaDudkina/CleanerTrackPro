@@ -208,12 +208,7 @@ h3 {
 .flex{
   display: flex;
   align-items: baseline;
-}
-.li-visibility{
-  /*display: none;*/
-  border-bottom: #c2c2c2 solid 1px;
-  padding: 10px;
-  cursor: pointer;
+  flex-wrap: wrap;
 }
 ul{
   list-style: none;
