@@ -34,7 +34,6 @@ export default {
       this.success = true;
       const newClient = data;
       this.$store.dispatch('addClient', newClient);
-      this.$store.dispatch('loadClients');
     },
     closeDialog(){
       this.$router.replace("/clients");

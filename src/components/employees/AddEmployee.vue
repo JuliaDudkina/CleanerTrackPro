@@ -30,11 +30,10 @@ export default {
     }
   },
   methods:{
-    async submitData(data){
+    submitData(data){
       this.success = true;
       const newEmployee = data;
-      await this.$store.dispatch('addEmployee', newEmployee);
-      await this.$store.dispatch('loadEmployees');
+      this.$store.dispatch('addEmployee', newEmployee);
     },
     closeDialog(){
       this.$router.replace("/employees");

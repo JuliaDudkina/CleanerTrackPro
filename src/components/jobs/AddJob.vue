@@ -31,10 +31,10 @@ export default {
     }
   },
   methods:{
-    async addJob(data){
+    addJob(data){
       this.success = true;
       const newJob = data;
-      await this.$store.dispatch('addJob',newJob);
+      this.$store.dispatch('addJob',newJob);
     },
     closeDialog(){
       this.$router.replace('/jobs');

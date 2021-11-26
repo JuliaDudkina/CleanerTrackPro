@@ -39,7 +39,7 @@ export default {
     },
   },
   methods:{
-    async update(data){
+    update(data){
       this.success = true;
       const updatedClient = {
         name: data.name,
@@ -48,8 +48,7 @@ export default {
         contactPerson: data.contactPerson,
         type: data.type,
       };
-      await this.$store.dispatch('updateClient', updatedClient);
-      await this.$store.dispatch('loadClients');
+      this.$store.dispatch('updateClient', updatedClient);
     },
     closeDialog(){
       this.$router.replace("/clients");

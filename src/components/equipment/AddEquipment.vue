@@ -32,11 +32,10 @@ export default {
     }
   },
   methods:{
-    async submitData(data){
+    submitData(data){
       this.success = true;
       const newEquipment = data;
-      await this.$store.dispatch('addEquipment',newEquipment);
-      await this.$store.dispatch('loadEquipment');
+      this.$store.dispatch('addEquipment',newEquipment);
     },
     closeDialog(){
       this.$router.replace("/equipment");

@@ -38,15 +38,14 @@ export default {
     }
   },
   methods:{
-    async update(data){
+    update(data){
       this.success = true;
       const updatedItem = {
         name: data.name,
         fee: data.fee,
         storage: data.storage,
       }
-      await this.$store.dispatch('updateItem',updatedItem);
-      await this.$store.dispatch('loadEquipment');
+      this.$store.dispatch('updateItem',updatedItem);
     },
     closeDialog(){
       this.$router.replace("/equipment");

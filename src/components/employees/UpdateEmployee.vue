@@ -38,11 +38,10 @@ export default {
     }
   },
   methods:{
-    async update(data){
+    update(data){
       this.success = true;
       const updatedEmployee = data;
-      await this.$store.dispatch('updateEmployee', updatedEmployee);
-      await this.$store.dispatch('loadEmployees');
+      this.$store.dispatch('updateEmployee', updatedEmployee);
     },
     closeDialog(){
       this.$router.replace("/employees");

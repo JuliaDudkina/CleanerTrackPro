@@ -30,9 +30,9 @@ export default {
     }
   },
   methods:{
-    loadEquipment(){
+    async loadEquipment(){
       try {
-        this.$store.dispatch('loadEquipment');
+        await this.$store.dispatch('loadEquipment');
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
