@@ -3,31 +3,25 @@
     <wrapper>
       <li>
         <h2>Clients</h2>
-        <link-button mode="flat" link :to="link('/clients')">Edit</link-button>
+        <link-button mode="flat" link :to="link('/clients')">View</link-button>
       </li>
     </wrapper>
     <wrapper>
       <li>
-        <h2>Worksites</h2>
-        <link-button mode="flat" link :to="link('/worksites')">Edit</link-button>
-        </li>
-    </wrapper>
-    <wrapper>
-      <li>
         <h2>Employees</h2>
-        <link-button mode="flat" link :to="link('/employees')">Edit</link-button>
+        <link-button mode="flat" link :to="link('/employees')">View</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Equipment</h2>
-        <link-button mode="flat" link :to="link('/equipment')">Edit</link-button>
+        <link-button mode="flat" link :to="link('/equipment')">View</link-button>
         </li>
     </wrapper>
     <wrapper>
       <li>
         <h2>Jobs</h2>
-        <link-button mode="flat" link :to="link('/jobs')">Edit</link-button>
+        <link-button mode="flat" link :to="link('/jobs')">View</link-button>
         </li>
     </wrapper>
   </ul>
