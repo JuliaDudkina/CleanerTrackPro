@@ -20,7 +20,7 @@
       </div>
     </wrapper>
     <Dialog @close="deleteClient" :show="isConfirm" title="Are you sure you want to delete this client?">
-      <h3>This client will be deleted immediately. You cannot undo this action.</h3>
+      <h3>This client will be deleted immediately along with their worksites.<br>You cannot undo this action.</h3>
       <template v-slot:actions>
         <link-button @click="closeConfirmation">Cancel</link-button>
       </template>

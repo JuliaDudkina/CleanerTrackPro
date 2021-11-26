@@ -72,7 +72,8 @@ export default {
     },
     async deleteClient(context,data){
         const clientId = data;
-
+        await context.dispatch('setClient', {id: clientId});
+        await context.dispatch('loadClientWorksites');
         const response = await fetch(
             `https://cleanertrackpro-default-rtdb.firebaseio.com/clients/${clientId}.json`,
             {
@@ -83,8 +84,8 @@ export default {
             const error = new Error(response.message || 'Failed.Try Later');
             throw error;
         }
-
         context.commit('deleteClient', clientId);
+        context.dispatch('deleteClientWorksites');
     },
     setClient(context,data) {
         const client = data;

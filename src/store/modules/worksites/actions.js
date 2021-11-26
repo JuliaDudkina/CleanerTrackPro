@@ -61,6 +61,7 @@ export default {
     },
     async loadClientWorksites(context){
         const id = context.rootGetters.client.id;
+        console.log(id);
         const response = await fetch('https://cleanertrackpro-default-rtdb.firebaseio.com/worksites.json');
         const responseData = await response.json();
 
@@ -83,5 +84,21 @@ export default {
         }
         context.commit('loadClientWorksites',worksites);
     },
+    async deleteClientWorksites(context){
+        const clientWorksites = context.rootGetters.clientWorksites;
 
+        for (const clientWorksite of clientWorksites) {
+            const id = clientWorksite.id;
+            const response = await fetch(
+                `https://cleanertrackpro-default-rtdb.firebaseio.com/worksites/${id}.json`,
+                {
+                    method: 'DELETE'
+                }
+            )
+            if (!response.ok) {
+                const error = new Error(response.message || 'Failed.Try Later');
+                throw error;
+            }
+        }
+    },
 }
