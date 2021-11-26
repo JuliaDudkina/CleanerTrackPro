@@ -2,39 +2,16 @@
   <wrapper>
     <form @submit.prevent="action">
       <slot name="title"></slot>
-      <div class="form-control" :class="{invalid: !fullName.isValid}">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" v-model.trim="fullName.val" @blur="clearValidity('fullName')">
+      <div class="form-control" :class="{invalid: !name.isValid}">
+        <label for="name">Name</label>
+        <input type="text" id="name" v-model.trim="name.val" @blur="clearValidity('name')">
       </div>
-      <p v-if="!fullName.isValid">Name cannot be empty!</p>
-      <div class="form-control">
-        <label :class="{invalid: !address.isValid}">Address</label>
-        <div class="flex" :class="{invalid: !address.isValid}">
-          <div>
-            <label for="city">City</label>
-            <input type="text" id="city" v-model.trim="address.val.city" @blur="clearValidity('address')">
-          </div>
-          <div>
-            <label for="street">Street</label>
-            <input type="text" id="street" v-model.trim="address.val.street" @blur="clearValidity('address')">
-          </div>
-        </div>
-        <div class="flex" :class="{invalid: !address.isValid}">
-          <div>
-            <label for="house">House</label>
-            <input type="number" id="house" v-model.number="address.val.house" @blur="clearValidity('address')">
-          </div>
-          <div>
-            <label for="flat">Flat</label>
-            <input type="number" id="flat" v-model.number="address.val.flat" @blur="clearValidity('address')">
-          </div>
-          <div>
-            <label for="index">Index</label>
-            <input type="number" id="index" v-model.number="address.val.index" @blur="clearValidity('address')">
-          </div>
-        </div>
-        <p v-if="!address.isValid">All address fields should be completed!</p>
+      <p v-if="!name.isValid">Name cannot be empty!</p>
+      <div class="form-control" :class="{invalid: !address.isValid}">
+        <label>Address</label>
+        <input type="text" id="city" v-model.trim="address.val" @blur="clearValidity('address')">
       </div>
+      <p v-if="!address.isValid">Address cannot be empty!</p>
       <div class="form-control" :class="{invalid: !phone.isValid}">
         <label for="phone">Contact Phone</label>
         <input type="tel" id="phone" v-model.number="phone.val" @blur="clearValidity('phone')">
@@ -45,14 +22,14 @@
         <input type="text" id="person" v-model.trim="contactPerson.val" @blur="clearValidity('contactPerson')">
       </div>
       <p v-if="!contactPerson.isValid">Contact Person cannot be empty!</p>
-      <div class="flex" :class="{invalid: !status.isValid}">
-        <label>Client's status:</label>
-        <select v-model="status.val" @blur="clearValidity('status')">
+      <div class="flex" :class="{invalid: !type.isValid}">
+        <label>Client's type:</label>
+        <select v-model="type.val" @blur="clearValidity('type')">
           <option value="corporate">a company</option>
           <option value="individual">an individual</option>
         </select>
       </div>
-      <p v-if="!status.isValid">Please select client's status!</p>
+      <p v-if="!type.isValid">Please select client's status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -63,21 +40,15 @@ import Wrapper from "../UI/Wrapper";
 export default {
   name: "AddClient",
   components: {Wrapper},
-  props: ['oldFullName','oldCity','oldStreet','oldHouse','oldFlat','oldIndex','oldPhone','oldContactPerson','oldStatus'],
+  props: ['oldName','oldAddress','oldPhone','oldContactPerson','oldType'],
   data(){
     return{
-      fullName: {
-        val: this.oldFullName || '',
+      name: {
+        val: this.oldName || '',
         isValid: true
       },
       address: {
-        val: {
-          city: this.oldCity || '',
-          street: this.oldStreet || '',
-          house: this.oldHouse || null,
-          flat: this.oldFlat || null,
-          index: this.oldIndex || null,
-        },
+        val: this.oldAddress || '',
         isValid: true
       },
       phone:{
@@ -88,8 +59,8 @@ export default {
         val: this.oldContactPerson || '',
         isValid: true
       },
-      status:{
-        val: this.oldStatus || '',
+      type:{
+        val: this.oldType || '',
         isValid: true
       },
       formIsValid: true,
@@ -101,16 +72,11 @@ export default {
     },
     validateForm(){
       this.formIsValid = true;
-      if (this.fullName.val === ''){
-        this.fullName.isValid = false;
+      if (this.name.val === ''){
+        this.name.isValid = false;
         this.formIsValid = false;
       }
-      if (this.address.val.city === '' ||
-          this.address.val.street === '' ||
-          !this.address.val.flat ||
-          !this.address.val.house ||
-          !this.address.val.index
-      ){
+      if (this.address.val === ''){
         this.address.isValid = false;
         this.formIsValid = false;
       }
@@ -118,8 +84,8 @@ export default {
         this.contactPerson.isValid = false;
         this.formIsValid = false;
       }
-      if (this.status.val === ''){
-        this.status.isValid = false;
+      if (this.type.val === ''){
+        this.type.isValid = false;
         this.formIsValid = false;
       }
       if (!this.phone.val){
@@ -133,11 +99,11 @@ export default {
         return;
       }
       const newClient = {
-        name: this.fullName.val,
+        name: this.name.val,
         address: this.address.val,
         phone: this.phone.val,
         contactPerson: this.contactPerson.val,
-        status: this.status.val
+        type: this.type.val
       }
       this.$emit('action',newClient)
     }

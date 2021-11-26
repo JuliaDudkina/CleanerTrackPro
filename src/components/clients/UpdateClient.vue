@@ -1,14 +1,10 @@
 <template>
   <client-form @action="update"
-               :old-full-name="oldClient.name"
-               :old-city="oldClient.address.city"
-               :old-street="oldClient.address.street"
-               :old-house="oldClient.address.house"
-               :old-flat="oldClient.address.flat"
-               :old-index="oldClient.address.index"
+               :old-name="oldClient.name"
+               :old-address="oldClient.address"
                :old-phone="oldClient.phone"
                :old-contact-person="oldClient.contactPerson"
-               :old-status="oldClient.status"
+               :old-type="oldClient.type"
   >
     <template v-slot:title>
       <h2>Update the client</h2>
@@ -38,7 +34,7 @@ export default {
         address: data.address,
         phone: data.phone,
         contactPerson: data.contactPerson,
-        status: data.status,
+        type: data.type,
       };
       await this.$store.dispatch('updateClient', updatedClient);
       await this.$store.dispatch('loadClients');
@@ -49,10 +45,6 @@ export default {
 </script>
 
 <style scoped>
-
-.form-control {
-  margin: 0.5rem 0;
-}
 
 label {
   font-weight: bold;
@@ -90,9 +82,5 @@ h3 {
 
 .invalid input{
   border: 1px solid red;
-}
-.flex{
-  display: flex;
-  align-items: baseline;
 }
 </style>

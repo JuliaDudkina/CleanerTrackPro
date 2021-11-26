@@ -13,7 +13,7 @@
           :address="client.address"
           :phone="client.phone"
           :contact-person="client.contactPerson"
-          :status="client.status"
+          :type="client.type"
       ></client-details>
     </router-view>
   </div>
