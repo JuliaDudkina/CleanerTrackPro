@@ -34,9 +34,9 @@ export default {
     }
   },
   methods:{
-    loadJobs(){
+    async loadJobs(){
       try {
-        this.$store.dispatch('loadJobs');
+        await this.$store.dispatch('loadJobs');
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
