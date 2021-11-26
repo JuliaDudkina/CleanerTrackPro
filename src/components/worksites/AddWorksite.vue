@@ -18,8 +18,8 @@ export default {
     async saveData(data) {
       const newWorksite = data;
       await this.$store.dispatch('addWorksite', newWorksite);
-      await this.$store.dispatch('loadWorksites');
-      await this.$router.replace('/worksites');
+      await this.$store.dispatch('loadClientWorksites');
+      this.$router.go(-1);
     }
   }
 }

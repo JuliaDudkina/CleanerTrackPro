@@ -41,13 +41,18 @@ export default {
         type: this.type,
       }
       this.$store.dispatch('setClient', client);
-      this.$router.replace('/clients/update');
+      const url = '/client/' + this.id + '/update';
+      this.$router.replace(url);
     },
     async loadWorksites(){
-      const clientId = this.id;
+      const client = {
+        id: this.id,
+      }
+      this.$store.dispatch('setClient', client);
       try {
-        await this.$store.dispatch('loadClientWorksites', clientId);
-        this.$router.replace('/clients/worksites');
+        await this.$store.dispatch('loadClientWorksites');
+        const url = '/client/' + this.id + '/worksites';
+        this.$router.replace(url);
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

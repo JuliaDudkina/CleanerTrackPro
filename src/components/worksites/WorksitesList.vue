@@ -2,7 +2,7 @@
   <div>
     <wrapper class="header">
       <h1>Worksites</h1>
-      <link-button link to="/worksites/register">Add a Worksite</link-button>
+      <link-button link :to="addWorksiteLink">Add a Worksite</link-button>
     </wrapper>
     <ul v-if="clientWorksites.length > 0">
       <worksite-details
@@ -32,6 +32,10 @@ export default {
   computed: {
     clientWorksites(){
       return this.$store.getters.clientWorksites;
+    },
+    addWorksiteLink(){
+      const link = this.$route.path + '/register';
+      return link;
     }
   },
 }

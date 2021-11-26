@@ -29,7 +29,8 @@ export default {
         type: this.type,
       }
       this.$store.dispatch('setOldData', oldData);
-      this.$router.replace('/worksites/update');
+      const url = this.$route.path.substring(0, this.$route.path.length - 1) + '/' + this.id + '/update';
+      this.$router.replace(url);
     },
     deleteWorksite(){
       const worksiteId = this.id;

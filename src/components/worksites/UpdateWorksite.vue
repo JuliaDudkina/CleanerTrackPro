@@ -29,10 +29,13 @@ export default {
         name: data.name,
         address: data.address,
         type: data.type,
+        clientId: data.clientId
       }
       await this.$store.dispatch('updateWorksite', newData);
-      await this.$store.dispatch('loadWorksites');
-      await this.$router.replace('/worksites');
+      await this.$store.dispatch('loadClientWorksites');
+      const index = this.$route.path.indexOf('worksite')
+      const url = this.$route.path.substring(0, index + 8) + 's';
+      this.$router.replace(url);
     }
   }
 }

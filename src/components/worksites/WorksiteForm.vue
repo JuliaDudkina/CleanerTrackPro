@@ -53,6 +53,11 @@ export default {
 
     }
   },
+  computed:{
+    clientId(){
+      return this.$store.getters.client.id;
+    }
+  },
   methods:{
     clearValidity(input){
       this[input].isValid = true;
@@ -80,7 +85,8 @@ export default {
       const newWorksite ={
         name: this.name.val,
         address: this.address.val,
-        type: this.type.val
+        type: this.type.val,
+        clientId: this.clientId
       }
       this.$emit('action',newWorksite);
     }
