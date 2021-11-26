@@ -16,6 +16,7 @@
         <label>Type of place:</label>
         <select v-model="type.val" @blur="clearValidity('type')">
           <option value="Office">Office</option>
+          <option value="Store">Store</option>
           <option value="Residential building">Residential building</option>
           <option value="Personal house">Personal house</option>
           <option value="Individual apartment">Individual apartment</option>
