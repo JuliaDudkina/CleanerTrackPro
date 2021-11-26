@@ -2,6 +2,7 @@
   <div>
     <Dialog @close="handleError" :show="!!error" title="An error occurred...">
       {{error}}
+      <template v-slot:buttonText>Close</template>
     </Dialog>
     <wrapper>
       <form @submit.prevent="submitForm">
@@ -107,8 +108,7 @@ label {
   display: block;
 }
 
-input,
-textarea {
+input {
   display: block;
   width: 100%;
   font: inherit;
@@ -116,9 +116,8 @@ textarea {
   padding: 0.15rem;
 }
 
-input:focus,
-textarea:focus {
-  border-color: #3d008d;
+input:focus {
+  border-color: #196a33;
   background-color: #faf6ff;
   outline: none;
 }
