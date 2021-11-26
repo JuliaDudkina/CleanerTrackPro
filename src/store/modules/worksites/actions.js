@@ -3,7 +3,8 @@ export default {
         const newWorksite = {
             name: data.name,
             address: data.address,
-            type: data.type
+            type: data.type,
+            clientId: data.clientId
         }
 
         const response = await fetch('https://cleanertrackpro-default-rtdb.firebaseio.com/worksites.json',
@@ -27,8 +28,8 @@ export default {
             name: data.name,
             address: data.address,
             type: data.type,
+            clientId: data.clientId
         }
-        console.log(updatedWorksite);
         const response = await fetch(`https://cleanertrackpro-default-rtdb.firebaseio.com/worksites/${worksiteId}.json`,{
             method: "PUT",
             body: JSON.stringify(updatedWorksite)
@@ -58,8 +59,8 @@ export default {
 
         context.commit('deleteWorksite',worksiteId);
     },
-    async loadClientWorksites(context, payload){
-        const id = payload;
+    async loadClientWorksites(context){
+        const id = context.rootGetters.client.id;
         const response = await fetch('https://cleanertrackpro-default-rtdb.firebaseio.com/worksites.json');
         const responseData = await response.json();
 
