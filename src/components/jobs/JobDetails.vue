@@ -1,56 +1,71 @@
 <template>
-  <li>
-    <wrapper class="wrapper">
-      <div>
-        <div class="flex">
-          <div class="flex m-r">
-            <h3>Start Date: </h3>
-            <p>{{ startDate }}</p>
+  <div>
+    <li>
+      <wrapper class="wrapper">
+        <div>
+          <div class="flex">
+            <div class="flex m-r">
+              <h3>Start Date: </h3>
+              <p>{{ startDate }}</p>
+            </div>
+            <div class="flex">
+              <h3>End Date:</h3>
+              <p> {{ endDate }}</p>
+            </div>
           </div>
           <div class="flex">
-            <h3>End Date:</h3>
-            <p> {{ endDate }}</p>
+            <h3>Type:</h3>
+            <p> {{ type }}</p>
+          </div>
+          <div class="flex">
+            <h3>Hazardous materials:</h3>
+            <p> {{ isHazard }}</p>
+          </div>
+          <div class="flex">
+            <h3>Fee:</h3>
+            <p>${{ fee }}</p>
+          </div>
+          <div class="flex">
+            <h3>Employee:</h3>
+            <p> {{ employee }}</p>
+          </div>
+          <div class="flex" v-if="equipment">
+            <h3>Equipment:</h3>
+            <ul>
+              <li v-for="item in equipment"
+                  :key="item">
+                {{ item }}
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="flex">
-          <h3>Type:</h3>
-          <p> {{ type }}</p>
+        <div class="actions">
+          <link-button class="m-b" @click="updateJob">Update</link-button>
+          <link-button @click="confirm">Delete</link-button>
         </div>
-        <div class="flex">
-          <h3>Hazardous materials:</h3>
-          <p> {{ isHazard }}</p>
-        </div>
-        <div class="flex">
-          <h3>Fee:</h3>
-          <p>${{ fee }}</p>
-        </div>
-        <div class="flex">
-          <h3>Employee:</h3>
-          <p> {{ employee }}</p>
-        </div>
-        <div class="flex" v-if="equipment">
-          <h3>Equipment:</h3>
-          <ul>
-            <li v-for="item in equipment"
-                :key="item">
-              {{ item }}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="actions">
-        <link-button class="m-b" @click="updateJob">Update</link-button>
-        <link-button @click="deleteJob">Delete</link-button>
-      </div>
-    </wrapper>
-  </li>
+      </wrapper>
+    </li>
+    <Dialog @close="deleteJob" :show="isConfirm" title="Are you sure you want to delete this job?">
+      <h3>This job will be deleted immediately. You cannot undo this action.</h3>
+      <template v-slot:actions>
+        <link-button @click="closeConfirmation">Cancel</link-button>
+      </template>
+      <template v-slot:buttonText>Delete</template>
+    </Dialog>
+  </div>
 </template>
 
 <script>
 import Wrapper from "../UI/Wrapper";
+import Dialog from "../UI/Dialog";
 export default {
-  components: {Wrapper},
+  components: {Wrapper, Dialog},
   props:['id','startDate', 'endDate', 'type', 'hazard', 'fee', 'employee', 'equipment'],
+  data(){
+    return{
+      isConfirm: false,
+    }
+  },
   computed:{
     isHazard(){
       if( this.hazard){
@@ -61,9 +76,16 @@ export default {
     }
   },
   methods: {
+    confirm(){
+      this.isConfirm = true;
+    },
+    closeConfirmation(){
+      this.isConfirm = false;
+    },
     deleteJob() {
       const jobID = this.id;
       this.$store.dispatch('deleteJob', jobID);
+      this.isConfirm = false;
     },
     updateJob(){
       const oldJob = {
