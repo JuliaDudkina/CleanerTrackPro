@@ -1,6 +1,6 @@
 <template>
   <Dialog @close="closeDialog" :show="success" title="Success!">
-    <h3>A new client has been successfully updated!</h3>
+    <h3>The client has been successfully updated!</h3>
     <template v-slot:buttonText>Go to Clients' List</template>
   </Dialog>
   <client-form @action="update"
