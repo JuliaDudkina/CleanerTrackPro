@@ -11,9 +11,10 @@
         <slot></slot>
       </section>
       <menu v-if="!fixed">
-        <slot name="actions">
-          <link-button @click="tryClose">Close</link-button>
-        </slot>
+        <slot name="actions"></slot>
+        <link-button @click="tryClose">
+          <slot name="buttonText"></slot>
+        </link-button>
       </menu>
     </dialog>
   </teleport>
