@@ -4,9 +4,9 @@
       <h1>Worksites</h1>
       <link-button link to="/worksites/register">Add a Worksite</link-button>
     </wrapper>
-    <ul>
+    <ul v-if="clientWorksites.length > 0">
       <worksite-details
-          v-for="worksite in worksites"
+          v-for="worksite in clientWorksites"
           :key="worksite.name"
           :id="worksite.id"
           :name="worksite.name"
@@ -15,31 +15,25 @@
       >
       </worksite-details>
     </ul>
+    <div v-else>
+      <wrapper class="header">
+        <h2>This client does not have any worksites yet.</h2>
+      </wrapper>
+    </div>
   </div>
 </template>
 
 <script>
 import WorksiteDetails from "./WorksiteDetails";
+import Wrapper from "../UI/Wrapper";
 export default {
   name: "WorksitesList",
-  components:{WorksiteDetails},
+  components:{Wrapper, WorksiteDetails},
   computed: {
-    worksites(){
-      return this.$store.getters.worksites;
+    clientWorksites(){
+      return this.$store.getters.clientWorksites;
     }
   },
-  methods:{
-    async loadWorksites() {
-      try {
-        await this.$store.dispatch('loadWorksites');
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
-      }
-    },
-  },
-  created(){
-    this.loadWorksites();
-  }
 }
 </script>
 

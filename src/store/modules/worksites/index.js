@@ -5,7 +5,6 @@ import getters from './getters';
 export default {
     state(){
         return{
-            worksites: [],
             oldData: {},
             clientWorksites: [],
         }
