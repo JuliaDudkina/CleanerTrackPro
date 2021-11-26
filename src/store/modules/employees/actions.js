@@ -85,7 +85,6 @@ export default {
     },
     async updateEmployee(context, data){
         const employeeId = context.rootGetters.employee.id;
-        console.log(employeeId);
         const updatedEmployee = {
             name: data.name,
             address: data.address,

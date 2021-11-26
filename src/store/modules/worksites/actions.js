@@ -61,7 +61,6 @@ export default {
     },
     async loadClientWorksites(context){
         const id = context.rootGetters.client.id;
-        console.log(id);
         const response = await fetch('https://cleanertrackpro-default-rtdb.firebaseio.com/worksites.json');
         const responseData = await response.json();
 
