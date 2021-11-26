@@ -1,4 +1,8 @@
 <template>
+  <Dialog @close="closeDialog" :show="success" title="Success!">
+    <h3>A new client has been successfully updated!</h3>
+    <template v-slot:buttonText>Go to Clients' List</template>
+  </Dialog>
   <client-form @action="update"
                :old-name="oldClient.name"
                :old-address="oldClient.address"
@@ -17,10 +21,17 @@
 
 <script>
 import ClientForm from "./ClientForm";
+import Dialog from "../UI/Dialog";
 export default {
   name: "UpdateClient",
   components: {
-    ClientForm
+    ClientForm,
+    Dialog
+  },
+  data(){
+    return{
+      success: false
+    }
   },
   computed:{
     oldClient(){
@@ -29,6 +40,7 @@ export default {
   },
   methods:{
     async update(data){
+      this.success = true;
       const updatedClient = {
         name: data.name,
         address: data.address,
@@ -38,7 +50,9 @@ export default {
       };
       await this.$store.dispatch('updateClient', updatedClient);
       await this.$store.dispatch('loadClients');
-      await this.$router.replace('/clients');
+    },
+    closeDialog(){
+      this.$router.replace("/clients");
     }
   }
 }
