@@ -15,15 +15,15 @@
       <div class=" form-control flex" :class="{invalid: !type.isValid}">
         <label>Type of place:</label>
         <select v-model="type.val" @blur="clearValidity('type')">
-          <option value="Office">Office</option>
-          <option value="Store">Store</option>
-          <option value="Residential building">Residential building</option>
-          <option value="Personal house">Personal house</option>
-          <option value="Individual apartment">Individual apartment</option>
-          <option value="Industrial area">Industrial area</option>
-          <option value="Warehouse">Warehouse</option>
-          <option value="Outdoor location">Outdoor location</option>
-          <option value="Other">Other</option>
+          <option>Office</option>
+          <option>Store</option>
+          <option>Residential building</option>
+          <option>Personal house</option>
+          <option>Individual apartment</option>
+          <option>Industrial area</option>
+          <option>Warehouse</option>
+          <option>Outdoor location</option>
+          <option>Other</option>
         </select>
       </div>
       <p v-if="!type.isValid"> Please select the type of the worksite!</p>
