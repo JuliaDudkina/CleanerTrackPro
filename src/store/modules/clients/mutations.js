@@ -17,7 +17,4 @@ export default {
         const chosen = state.clients.find(client => client.id === clientId);
         chosen.status = false;
     },
-    setSuccessDeletion(state){
-        state.successDeletion = !state.successDeletion;
-    }
 };

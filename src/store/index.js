@@ -14,7 +14,28 @@ const store = createStore({
         equipment,
         worksites,
         jobs
-    }
+    },
+    state(){
+        return{
+            successDeletion: false
+        }
+    },
+    getters:{
+        successDeletion(state){
+            return state.successDeletion;
+        }
+    },
+    actions:{
+        setSuccessDeletion(context){
+            context.commit('setSuccessDeletion');
+        }
+    },
+    mutations:{
+        setSuccessDeletion(state){
+            state.successDeletion = !state.successDeletion;
+        }
+    },
+
 })
 
 export default store;

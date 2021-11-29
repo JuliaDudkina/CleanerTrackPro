@@ -5,7 +5,4 @@ export default {
     client(state){
         return state.client;
     },
-    successDeletion(state){
-        return state.successDeletion;
-    }
 };
