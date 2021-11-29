@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <li >
-      <wrapper class="flex">
+    <li>
+      <wrapper class="flex" :class="{scrollToMe: changed}">
         <div>
           <p>Name: {{name}}</p>
           <p>Fee: ${{ fee }}</p>
@@ -13,21 +12,20 @@
           <link-button @click="confirm">Delete</link-button>
         </div>
       </wrapper>
+      <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this item?">
+        <h3 v-if="!status">This item will be deleted immediately. You cannot undo this action.</h3>
+        <h3 v-if="status">This item is active and cannot be deleted.</h3>
+        <template v-slot:actions>
+          <link-button v-if="!status" @click="deleteItem">Delete anyway</link-button>
+          <link-button v-if="status" @click="deactivate">Deactivate</link-button>
+        </template>
+        <template v-slot:buttonText>Cancel</template>
+      </Dialog>
+      <Dialog :show="successDeactivation" title="Success!" @close="closeDialog">
+        <h3>This item has been successfully deactivated!</h3>
+        <template v-slot:buttonText>Close</template>
+      </Dialog>
     </li>
-    <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this item?">
-      <h3 v-if="!status">This item will be deleted immediately. You cannot undo this action.</h3>
-      <h3 v-if="status">This item is active and cannot be deleted.</h3>
-      <template v-slot:actions>
-        <link-button v-if="!status" @click="deleteItem">Delete anyway</link-button>
-        <link-button v-if="status" @click="deactivate">Deactivate</link-button>
-      </template>
-      <template v-slot:buttonText>Cancel</template>
-    </Dialog>
-    <Dialog :show="successDeactivation" title="Success!" @close="closeDialog">
-      <h3>This item has been successfully deactivated!</h3>
-      <template v-slot:buttonText>Close</template>
-    </Dialog>
-  </div>
 </template>
 
 <script>
@@ -39,7 +37,8 @@ export default {
   data(){
     return{
       isConfirm: false,
-      successDeactivation: false
+      successDeactivation: false,
+      changed: false
     }
   },
   computed:{
@@ -82,7 +81,30 @@ export default {
       }
       this.$store.dispatch('setItem', item);
       this.$router.replace('/equipment/update');
+    },
+    scrollToElement() {
+      const el = document.querySelector('.scrollToMe');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
+  },
+  watch:{
+    name(){
+      this.changed = true;
+    },
+    fee(){
+      this.changed = true;
+    },
+    storage(){
+      this.changed = true;
+    },
+    stringStatus(){
+      this.changed = true;
+    }
+  },
+  updated() {
+    this.scrollToElement();
   }
 }
 </script>
@@ -92,5 +114,20 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+@keyframes highlight {
+  from {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+  50% {
+    box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+}
+.scrollToMe{
+  animation-duration: 3s;
+  animation-name: highlight;
 }
 </style>
