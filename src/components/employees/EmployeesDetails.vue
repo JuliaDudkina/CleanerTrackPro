@@ -14,7 +14,7 @@
             <address> {{ address }}</address>
           </div>
           <div class="inline">
-            <p>Status: {{ status }}</p>
+            <p>Status: {{ stringStatus }}</p>
           </div>
         </div>
         <div>
@@ -24,12 +24,18 @@
         </div>
       </wrapper>
     </li>
-    <Dialog @close="deleteEmployee" :show="isConfirm" title="Are you sure you want to delete this employee?">
-      <h3>This employee will be deleted immediately. You cannot undo this action.</h3>
+    <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this employee?">
+      <h3 v-if="!status">This employee will be deleted immediately. You cannot undo this action.</h3>
+      <h3 v-if="status">This employee is active and cannot be deleted.</h3>
+      <template v-slot:buttonText>Cancel</template>
       <template v-slot:actions>
-        <link-button @click="closeConfirmation">Cancel</link-button>
+        <link-button v-if="!status" @click="deleteEmployee">Delete anyway</link-button>
+        <link-button v-if="status" @click="deactivate">Deactivate</link-button>
       </template>
-      <template v-slot:buttonText>Delete</template>
+    </Dialog>
+    <Dialog :show="successDeactivation" title="Success!" @close="closeDialog">
+      <h3>This employee has been successfully deactivated!</h3>
+      <template v-slot:buttonText>Close</template>
     </Dialog>
   </div>
 </template>
@@ -43,7 +49,16 @@ export default {
   data(){
     return{
       isConfirm: false,
+      successDeactivation: false,
     }
+  },
+  computed:{
+    stringStatus(){
+      if (this.status) {
+        return 'Active'
+      }
+      return 'Inactive';
+    },
   },
   methods:{
     confirm(){
@@ -52,9 +67,20 @@ export default {
     closeConfirmation(){
       this.isConfirm = false;
     },
+    deactivate(){
+      const employeeId = this.id;
+      this.$store.dispatch('deactivateEmployee', employeeId);
+      this.isConfirm = false;
+      this.successDeactivation = true;
+    },
+    closeDialog(){
+      this.successDeactivation = false;
+    },
     deleteEmployee(){
-      const clientId = this.id;
-      this.$store.dispatch('deleteEmployee', clientId);
+      const employeeId = this.id;
+      this.$store.dispatch('deleteEmployee', employeeId);
+      this.isConfirm = false;
+      this.$store.dispatch('setSuccessDeletion');
     },
     updateEmployee(){
       const employee = {
@@ -64,7 +90,7 @@ export default {
         salary: this.salary,
         birthDate: this.birthDate,
         address: this.address,
-        status: this.status,
+        status: this.stringStatus,
       }
       this.$store.dispatch('setEmployee', employee);
       this.$router.replace('/employees/update');

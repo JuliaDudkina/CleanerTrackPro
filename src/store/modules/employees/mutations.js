@@ -14,5 +14,10 @@ export default {
     },
     setEmployee(state, payload){
         state.employee = payload;
+    },
+    deactivateEmployee(state, payload){
+        const employeeId = payload;
+        const chosen = state.employees.find(employee => employee.id === employeeId);
+        chosen.status = false;
     }
 }

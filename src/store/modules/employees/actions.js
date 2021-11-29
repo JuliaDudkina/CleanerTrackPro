@@ -107,4 +107,21 @@ export default {
             throw error;
         }
     },
+    async deactivateEmployee(context,data){
+        const employeeId = data;
+        await context.dispatch('setEmployee', {id: employeeId});
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/employees/${employeeId}/status.json`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(false)
+            }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+
+        context.commit('deactivateEmployee', employeeId);
+    },
 }
