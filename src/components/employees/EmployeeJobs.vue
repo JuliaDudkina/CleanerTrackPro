@@ -17,9 +17,9 @@
       >
       </job-details>
     </ul>
-    <div v-else>
+    <wrapper v-else>
       <h2>This employee does not have any jobs yet.</h2>
-    </div>
+    </wrapper>
   </div>
 </template>
 
@@ -37,7 +37,10 @@ export default {
       return this.$store.getters.employeesJobs;
     },
     employeeName(){
-      return this.$store.getters.employeesJobs[0].chosenEmployee;
+      if(this.employeeJobs.length > 0){
+        return this.$store.getters.employeesJobs[0].chosenEmployee;
+      }
+      return 'Employee';
     }
   },
 }
