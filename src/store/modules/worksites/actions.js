@@ -103,22 +103,21 @@ export default {
             }
         }
     },
-    async deactivateClientWorksites(context){
-        const clientWorksites = context.rootGetters.clientWorksites;
+    async deactivateClientWorksite(context, data){
+        const worksiteId = data;
 
-        for (const clientWorksite of clientWorksites) {
-            const id = clientWorksite.id;
-            const response = await fetch(
-                `https://cleanertrackpro-default-rtdb.firebaseio.com/worksites/${id}/status.json`,
-                {
-                    method: 'PUT',
-                    body: JSON.stringify(false)
-                }
-            )
-            if (!response.ok) {
-                const error = new Error(response.message || 'Failed.Try Later');
-                throw error;
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/worksites/${worksiteId}/status.json`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(false)
             }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
         }
+
+        context.commit('deactivateWorksite', worksiteId)
     },
 }

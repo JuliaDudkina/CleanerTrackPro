@@ -1,7 +1,7 @@
 <template>
   <div>
     <Dialog @close="closeDialog" :show="success" title="Success!">
-      <h3>A new worksite has been successfully updated!</h3>
+      <h3>This worksite has been successfully updated!</h3>
       <template v-slot:buttonText>Go to Worksites' List</template>
     </Dialog>
     <worksite-form @action="update"
@@ -22,9 +22,10 @@
 
 <script>
 import WorksiteForm from "./WorksiteForm";
+import Dialog from "../UI/Dialog";
 export default {
   name: "UpdateWorksite",
-  components:{WorksiteForm},
+  components:{WorksiteForm, Dialog},
   data(){
     return{
       success: false
@@ -37,21 +38,15 @@ export default {
   },
   methods:{
     async update(data){
-      const newData = {
-        name: data.name,
-        address: data.address,
-        type: data.type,
-        status:  data.status,
-        clientId: data.clientId
-      }
+      this.success = true;
+      const newData = {...data}
       await this.$store.dispatch('updateWorksite', newData);
       await this.$store.dispatch('loadClientWorksites');
+    },
+    closeDialog(){
       const index = this.$route.path.indexOf('worksite')
       const url = this.$route.path.substring(0, index + 8) + 's';
       this.$router.replace(url);
-    },
-    closeDialog(){
-      this.$router.go(-1);
     }
   }
 }

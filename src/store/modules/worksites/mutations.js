@@ -12,4 +12,9 @@ export default {
     loadClientWorksites(state,payload) {
         state.clientWorksites = payload;
     },
+    deactivateWorksite(state, payload){
+        const worksiteId = payload;
+        const chosen = state.clientWorksites.find(worksite => worksite.id === worksiteId);
+        chosen.status = false;
+    }
 }
