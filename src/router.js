@@ -35,7 +35,7 @@ const router = createRouter({
         {path: '/employees', component: EmployeesList, meta:{requiresAuth: true}},
         {path: '/employees/register', component: AddEmployee, meta:{requiresAuth: true}},
         {path: '/employees/update', component: UpdateEmployee, meta:{requiresAuth: true}},
-        {path: '/employees/jobs', component: EmployeeJobs, meta:{requiresAuth: true}},
+        {path: '/employee/:id/jobs', component: EmployeeJobs, meta:{requiresAuth: true}},
         {path: '/equipment', component: EquipmentList, meta:{requiresAuth: true}},
         {path: '/equipment/register', component: AddEquipment, meta:{requiresAuth: true}},
         {path: '/equipment/update', component: UpdateEquipment, meta:{requiresAuth: true}},

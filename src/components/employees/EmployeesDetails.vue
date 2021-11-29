@@ -99,7 +99,8 @@ export default {
       const employeeName = this.name;
       try {
         await this.$store.dispatch('loadEmployeesJobs', employeeName);
-        this.$router.replace('/employees/jobs');
+        const url = '/employee/' + this.id + '/jobs';
+        this.$router.replace(url);
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
