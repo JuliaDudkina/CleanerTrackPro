@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{scrollToMe: changed}">
     <wrapper>
       <div>
         <h1>{{ name }}</h1>
@@ -50,6 +50,7 @@ export default {
     return{
       isConfirm: false,
       successDeactivation: false,
+      changed: false
     }
   },
   computed:{
@@ -108,7 +109,30 @@ export default {
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
+    },
+    scrollToElement() {
+      const el = document.querySelector('.scrollToMe');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
+  },
+  watch:{
+    name(){
+      this.changed = true;
+    },
+    phone(){
+      this.changed = true;
+    },
+    address(){
+      this.changed = true;
+    },
+    stringStatus(){
+      this.changed = true;
+    }
+  },
+  updated() {
+    this.scrollToElement();
   }
 }
 </script>
@@ -120,5 +144,20 @@ export default {
 }
 .address p{
   margin: 0 5px 0 0;
+}
+@keyframes highlight {
+  from {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+  50% {
+    box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+}
+.scrollToMe .wrapper{
+  animation-duration: 3s;
+  animation-name: highlight;
 }
 </style>
