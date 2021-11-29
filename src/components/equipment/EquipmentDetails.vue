@@ -3,9 +3,10 @@
     <li >
       <wrapper class="flex">
         <div>
-          <h3>Name: {{name}}</h3>
-          <h3>Fee: ${{ fee }}</h3>
-          <h3>Storage Location: {{ storage }}</h3>
+          <p>Name: {{name}}</p>
+          <p>Fee: ${{ fee }}</p>
+          <p>Storage Location: {{ storage }}</p>
+          <p>Status: {{ status }}</p>
         </div>
         <div>
           <link-button @click="updateItem">Update</link-button>
@@ -27,7 +28,7 @@
 import Dialog from "../UI/Dialog";
 export default {
   name: "EquipmentDetails",
-  props:['id','name','fee', 'storage'],
+  props:['id','name','fee', 'storage', 'status'],
   components:{Dialog},
   data(){
     return{
@@ -51,6 +52,7 @@ export default {
         name: this.name,
         fee: this.fee,
         storage: this.storage,
+        status: this.status
       }
       this.$store.dispatch('setItem', item);
       this.$router.replace('/equipment/update');

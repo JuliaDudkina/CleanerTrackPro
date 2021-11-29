@@ -12,6 +12,7 @@
             :name="item.name"
             :fee="item.fee"
             :storage="item.storage"
+            :status="item.status"
       >
       </equipment-details>
     </ul>

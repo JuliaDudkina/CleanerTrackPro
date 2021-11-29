@@ -34,7 +34,7 @@ export default {
   methods:{
     submitData(data){
       this.success = true;
-      const newEquipment = data;
+      const newEquipment = {...data};
       this.$store.dispatch('addEquipment',newEquipment);
     },
     closeDialog(){

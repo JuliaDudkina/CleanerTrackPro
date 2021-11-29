@@ -8,6 +8,7 @@
                     :old-fee="item.fee"
                     :old-name="item.name"
                     :old-storage="item.storage"
+                    :old-status="item.status"
     >
       <template v-slot:title>
         <h2>Update this piece of equipment</h2>
@@ -40,11 +41,7 @@ export default {
   methods:{
     update(data){
       this.success = true;
-      const updatedItem = {
-        name: data.name,
-        fee: data.fee,
-        storage: data.storage,
-      }
+      const updatedItem = {...data};
       this.$store.dispatch('updateItem',updatedItem);
     },
     closeDialog(){

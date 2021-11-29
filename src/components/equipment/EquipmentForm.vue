@@ -17,6 +17,14 @@
         <input type="text" id="storage" v-model="storage.val" @blur="clearValidity('storage')">
       </div>
       <p v-if="!storage.isValid">Storage cannot empty!</p>
+      <div class="form-control" :class="{invalid: !status.isValid}">
+        <label>Status:</label>
+        <select v-model="status.val" @blur="clearValidity('status')">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+      <p v-if="!status.isValid">Please select status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -26,7 +34,7 @@
 <script>
 export default {
   name: "AddEquipment",
-  props: [ 'oldName','oldFee','oldStorage'],
+  props: [ 'oldName','oldFee','oldStorage', 'oldStatus'],
   data(){
     return{
       name:{
@@ -39,6 +47,10 @@ export default {
       },
       storage:{
         val: this.oldStorage || '',
+        isValid: true
+      },
+      status:{
+        val: this.oldStatus || '',
         isValid: true
       },
     }
@@ -61,6 +73,10 @@ export default {
         this.fee.isValid = false;
         this.formIsValid = false;
       }
+      if (this.status.val === ''){
+        this.status.isValid = false;
+        this.formIsValid = false;
+      }
     },
     action(){
       this.validateForm();
@@ -71,6 +87,7 @@ export default {
         name: this.name.val,
         fee: this.fee.val,
         storage: this.storage.val,
+        status: this.status.val
       }
       this.$emit('action',newEquipment);
     }

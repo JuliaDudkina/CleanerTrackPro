@@ -17,6 +17,7 @@ export default {
                 name: responseData[key].name,
                 fee: responseData[key].fee,
                 storage: responseData[key].storage,
+                status: responseData[key].status
             }
             equipment.unshift(item);
         }
@@ -28,6 +29,7 @@ export default {
             name: data.name,
             fee: data.fee,
             storage: data.storage,
+            status: data.status
         }
         const response = await fetch('https://cleanertrackpro-default-rtdb.firebaseio.com/equipment.json',
             {
@@ -71,6 +73,7 @@ export default {
             name: data.name,
             fee: data.fee,
             storage: data.storage,
+            status: data.status
         };
         const response = await fetch(
             `https://cleanertrackpro-default-rtdb.firebaseio.com/equipment/${itemId}.json`,
