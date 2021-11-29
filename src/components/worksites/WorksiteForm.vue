@@ -27,14 +27,13 @@
         </select>
       </div>
       <p v-if="!type.isValid"> Please select the type of the worksite!</p>
-      <div class="flex" :class="{invalid: !status.isValid}">
+      <div class="form-control">
         <label>Status:</label>
-        <select v-model="status.val" @blur="clearValidity('status')">
+        <select v-model="status">
           <option>Active</option>
           <option>Inactive</option>
         </select>
       </div>
-      <p v-if="!type.isValid"> Please select status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -58,15 +57,18 @@ export default {
         val: this.oldType || '',
         isValid: true,
       },
-      status: {
-        val: this.oldStatus|| '',
-        isValid: true,
-      },
+      status: this.oldStatus || ''
     }
   },
   computed:{
     clientId(){
       return this.$store.getters.client.id;
+    },
+    booleanStatus(){
+      if (this.status === 'Active'){
+        return true;
+      }
+      return false;
     }
   },
   methods:{
@@ -87,10 +89,6 @@ export default {
         this.type.isValid = false;
         this.formIsValid = false;
       }
-      if (this.status.val === ''){
-        this.status.isValid = false;
-        this.formIsValid = false;
-      }
     },
     action(){
       this.validateForm();
@@ -101,7 +99,7 @@ export default {
         name: this.name.val,
         address: this.address.val,
         type: this.type.val,
-        status: this.status.val,
+        status: this.booleanStatus,
         clientId: this.clientId
       }
       this.$emit('action',newWorksite);

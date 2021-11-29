@@ -17,14 +17,13 @@
         <input type="text" id="storage" v-model="storage.val" @blur="clearValidity('storage')">
       </div>
       <p v-if="!storage.isValid">Storage cannot empty!</p>
-      <div class="form-control" :class="{invalid: !status.isValid}">
+      <div class="form-control">
         <label>Status:</label>
-        <select v-model="status.val" @blur="clearValidity('status')">
+        <select v-model="status">
           <option>Active</option>
           <option>Inactive</option>
         </select>
       </div>
-      <p v-if="!status.isValid">Please select status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -49,10 +48,15 @@ export default {
         val: this.oldStorage || '',
         isValid: true
       },
-      status:{
-        val: this.oldStatus || '',
-        isValid: true
-      },
+      status: this.oldStatus || '',
+    }
+  },
+  computed:{
+    booleanStatus(){
+      if (this.status === 'Active'){
+        return true;
+      }
+      return false;
     }
   },
   methods:{
@@ -73,10 +77,6 @@ export default {
         this.fee.isValid = false;
         this.formIsValid = false;
       }
-      if (this.status.val === ''){
-        this.status.isValid = false;
-        this.formIsValid = false;
-      }
     },
     action(){
       this.validateForm();
@@ -87,7 +87,7 @@ export default {
         name: this.name.val,
         fee: this.fee.val,
         storage: this.storage.val,
-        status: this.status.val
+        status: this.booleanStatus
       }
       this.$emit('action',newEquipment);
     }

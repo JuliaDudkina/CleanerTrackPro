@@ -47,9 +47,9 @@
           </div>
         </div>
       </div>
-      <div class="form-control flex" :class="{invalid: !status.isValid}">
+      <div class="form-control">
         <label>Status:</label>
-        <select v-model="status.val" @blur="clearValidity('status')">
+        <select v-model="status">
           <option>Active</option>
           <option>Inactive</option>
         </select>
@@ -86,10 +86,7 @@ export default {
         val: this.oldChosenEmployee || '',
         isValid: true,
       },
-      status:{
-        val: this.oldStatus || '',
-        isValid: true,
-      },
+      status: this.oldStatus || '',
       equipment: this.oldEquipment || [],
     }
   },
@@ -99,6 +96,12 @@ export default {
     },
     itemNames(){
       return this.$store.getters.itemNames;
+    },
+    booleanStatus(){
+      if (this.status === 'Active'){
+        return true;
+      }
+      return false;
     }
   },
   methods:{
@@ -137,10 +140,6 @@ export default {
         this.chosenEmployee.isValid = false;
         this.formIsValid = false;
       }
-      if (this.status.val === ''){
-        this.status.isValid = false;
-        this.formIsValid = false;
-      }
       if (!this.fee.val || this.fee.val < 0){
         this.fee.isValid = false;
         this.formIsValid = false;
@@ -159,7 +158,7 @@ export default {
         fee: this.fee.val,
         chosenEmployee: this.chosenEmployee.val,
         equipment: this.equipment,
-        status: this.status.val
+        status: this.booleanStatus
       }
       this.$emit('action',newJob);
     }

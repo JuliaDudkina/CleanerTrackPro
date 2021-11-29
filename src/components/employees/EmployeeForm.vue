@@ -29,14 +29,13 @@
       </div>
       <p v-if="!birthDate.isValid">Birth Date cannot be empty!</p>
       <p v-if="!salary.isValid">Salary cannot be empty, zero or less!</p>
-      <div class="form-control flex" :class="{invalid: !status.isValid}">
+      <div class="form-control flex">
         <label>Status:</label>
-        <select v-model="status.val" @blur="clearValidity('status')">
+        <select v-model="status">
           <option>Active</option>
           <option>Inactive</option>
         </select>
       </div>
-      <p v-if="!status.isValid">Please select employee's status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -70,10 +69,15 @@ export default {
         val: this.oldAddress || '',
         isValid: true,
       },
-      status: {
-        val: this.oldStatus || '',
-        isValid: true,
+      status: this.oldStatus || '',
+    }
+  },
+  computed:{
+    booleanStatus(){
+      if (this.status === 'Active'){
+        return true;
       }
+      return false;
     }
   },
   methods:{
@@ -102,10 +106,6 @@ export default {
         this.phone.isValid = false;
         this.formIsValid = false;
       }
-      if (!this.status.val){
-        this.status.isValid = false;
-        this.formIsValid = false;
-      }
     },
     action(){
       this.validateForm();
@@ -118,7 +118,7 @@ export default {
         salary: this.salary.val,
         birthDate: this.birthDate.val,
         address: this.address.val,
-        status: this.status.val,
+        status: this.booleanStatus,
       }
       this.$emit('action',newEmployee);
     }
