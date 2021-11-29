@@ -4,6 +4,7 @@ export default {
             name: data.name,
             address: data.address,
             type: data.type,
+            status: data.status,
             clientId: data.clientId
         }
 
@@ -28,6 +29,7 @@ export default {
             name: data.name,
             address: data.address,
             type: data.type,
+            status: data.status,
             clientId: data.clientId
         }
         const response = await fetch(`https://cleanertrackpro-default-rtdb.firebaseio.com/worksites/${worksiteId}.json`,{
@@ -75,6 +77,7 @@ export default {
                 name: responseData[key].name,
                 address: responseData[key].address,
                 type: responseData[key].type,
+                status: responseData[key].status,
                 clientId: responseData[key].clientId,
             }
             if(worksite.clientId === id){

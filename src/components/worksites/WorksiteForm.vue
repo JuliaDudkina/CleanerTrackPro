@@ -27,6 +27,14 @@
         </select>
       </div>
       <p v-if="!type.isValid"> Please select the type of the worksite!</p>
+      <div class="flex" :class="{invalid: !status.isValid}">
+        <label>Status:</label>
+        <select v-model="status.val" @blur="clearValidity('status')">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+      <p v-if="!type.isValid"> Please select status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -35,7 +43,7 @@
 <script>
 export default {
   name: "AddWorksite",
-  props:['oldName','oldAddress', 'oldType'],
+  props:['oldName','oldAddress', 'oldType', 'oldStatus'],
   data(){
     return{
       name: {
@@ -50,7 +58,10 @@ export default {
         val: this.oldType || '',
         isValid: true,
       },
-
+      status: {
+        val: this.oldStatus|| '',
+        isValid: true,
+      },
     }
   },
   computed:{
@@ -76,6 +87,10 @@ export default {
         this.type.isValid = false;
         this.formIsValid = false;
       }
+      if (this.status.val === ''){
+        this.status.isValid = false;
+        this.formIsValid = false;
+      }
     },
     action(){
       this.validateForm();
@@ -86,6 +101,7 @@ export default {
         name: this.name.val,
         address: this.address.val,
         type: this.type.val,
+        status: this.status.val,
         clientId: this.clientId
       }
       this.$emit('action',newWorksite);

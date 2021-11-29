@@ -12,6 +12,7 @@
           :name="worksite.name"
           :address="worksite.address"
           :type="worksite.type"
+          :status="worksite.status"
       >
       </worksite-details>
     </ul>

@@ -29,7 +29,7 @@ export default {
   methods:{
     async saveData(data) {
       this.success = true;
-      const newWorksite = data;
+      const newWorksite = {...data};
       await this.$store.dispatch('addWorksite', newWorksite);
       await this.$store.dispatch('loadClientWorksites');
     },

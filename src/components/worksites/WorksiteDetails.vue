@@ -3,9 +3,10 @@
     <li>
       <wrapper class="flex">
         <div>
-          <h3>Name: {{ name }}</h3>
-          <h3>Address: {{ address }}</h3>
-          <h3>Type of place: {{ type }}</h3>
+          <p>Name: {{ name }}</p>
+          <p>Address: {{ address }}</p>
+          <p>Type of place: {{ type }}</p>
+          <p>Status: {{ status }}</p>
         </div>
         <div>
           <link-button @click="updateWorksite">Update</link-button>
@@ -29,7 +30,7 @@ import Dialog from "../UI/Dialog";
 export default {
   name: "WorksiteDetails",
   components: {Wrapper, Dialog},
-  props: ['id','name', 'address', 'type'],
+  props: ['id','name', 'address', 'type', 'status'],
   data(){
     return{
       isConfirm: false,
@@ -42,6 +43,7 @@ export default {
         name: this.name,
         address: this.address,
         type: this.type,
+        status: this.status
       }
       this.$store.dispatch('setOldData', oldData);
       const url = this.$route.path.substring(0, this.$route.path.length - 1) + '/' + this.id + '/update';

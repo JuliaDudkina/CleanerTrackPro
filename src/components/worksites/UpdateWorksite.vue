@@ -8,6 +8,7 @@
                    :old-name="oldData.name"
                    :old-address="oldData.address"
                    :old-type="oldData.type"
+                   :old-status="oldData.status"
     >
       <template v-slot:title>
         <h2>Update the worksite</h2>
@@ -40,6 +41,7 @@ export default {
         name: data.name,
         address: data.address,
         type: data.type,
+        status:  data.status,
         clientId: data.clientId
       }
       await this.$store.dispatch('updateWorksite', newData);
