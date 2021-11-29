@@ -93,5 +93,24 @@ export default {
     setClient(context,data) {
         const client = data;
         context.commit('setClient', client)
+    },
+    async deactivateClient(context,data){
+        const clientId = data;
+        await context.dispatch('setClient', {id: clientId});
+        await context.dispatch('loadClientWorksites');
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/clients/${clientId}/status.json`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(false)
+            }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+
+        context.commit('deactivateClient', clientId);
+        context.dispatch('deactivateClientWorksites');
     }
 };
