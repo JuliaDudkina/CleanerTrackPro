@@ -112,5 +112,8 @@ export default {
 
         context.commit('deactivateClient', clientId);
         context.dispatch('deactivateClientWorksites');
+    },
+    setSuccessDeletion(context){
+        context.commit('setSuccessDeletion');
     }
 };

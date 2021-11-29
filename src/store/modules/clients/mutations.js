@@ -16,5 +16,8 @@ export default {
         const clientId = payload;
         const chosen = state.clients.find(client => client.id === clientId);
         chosen.status = false;
+    },
+    setSuccessDeletion(state){
+        state.successDeletion = !state.successDeletion;
     }
 };

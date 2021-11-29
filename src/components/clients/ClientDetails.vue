@@ -10,7 +10,7 @@
           <p>Primary office address: </p>
           <address> {{ address }}</address>
         </div>
-        <p>Status: {{ status }}</p>
+        <p>Status: {{ stringStatus }}</p>
       </div>
       <div>
         <link-button @click="updateClient">Update</link-button>
@@ -18,17 +18,21 @@
         <link-button @click="loadWorksites">Worksites</link-button>
       </div>
     </wrapper>
-    <Dialog @close="deleteClient" :show="isConfirm" title="Are you sure you want to delete this client?">
-      <h3>This client will be deleted immediately along with their worksites.<br>You cannot undo this action.</h3>
+    <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this client?">
+      <h3>This client will be deleted immediately along with their worksites.<br>
+        You cannot undo this action.<br>
+        <p v-if="status">If you want to save data, select deactivation instead.</p>
+      </h3>
+      <template v-slot:buttonText>Cancel</template>
       <template v-slot:actions>
-        <link-button @click="closeConfirmation">Cancel</link-button>
+        <link-button @click="deleteClient">Delete</link-button>
+        <link-button v-if="status" @click="deactivate">Deactivate</link-button>
       </template>
-      <template v-slot:buttonText>Delete</template>
     </Dialog>
-<!--    <Dialog @close="closeDialog" :show="success" title="Success!">-->
-<!--      <h3>This client has been successfully deleted!</h3>-->
-<!--      <template v-slot:buttonText>Close</template>-->
-<!--    </Dialog>-->
+    <Dialog :show="successDeactivation" title="Success!" @close="closeDialog">
+      <h3>This client has been successfully deactivated!</h3>
+      <template v-slot:buttonText>Close</template>
+    </Dialog>
   </div>
 </template>
 
@@ -42,8 +46,16 @@ export default {
   data(){
     return{
       isConfirm: false,
-      success: false
+      successDeactivation: false,
     }
+  },
+  computed:{
+    stringStatus(){
+      if (this.status) {
+        return 'Active'
+      }
+      return 'Inactive';
+    },
   },
   methods:{
     confirm(){
@@ -52,15 +64,21 @@ export default {
     closeConfirmation(){
       this.isConfirm = false;
     },
-    deleteClient(){
+    deactivate(){
+      const clientId = this.id;
+      this.$store.dispatch('deactivateClient', clientId);
       this.isConfirm = false;
+      this.successDeactivation = true;
+    },
+    deleteClient(){
       const clientId = this.id;
       this.$store.dispatch('deleteClient', clientId);
-      this.success = true;
+      this.isConfirm = false;
+      this.$store.dispatch('setSuccessDeletion');
     },
-    // closeDialog(){
-    //   this.success = false;
-    // },
+    closeDialog(){
+      this.successDeactivation = false;
+    },
     updateClient(){
       const client = {
         id: this.id,
@@ -69,7 +87,7 @@ export default {
         phone: this.phone,
         contactPerson: this.contactPerson,
         type: this.type,
-        status: this.status
+        status: this.stringStatus
       }
       this.$store.dispatch('setClient', client);
       const url = '/client/' + this.id + '/update';

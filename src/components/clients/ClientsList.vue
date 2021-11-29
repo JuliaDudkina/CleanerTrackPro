@@ -17,24 +17,36 @@
           :status="client.status"
       ></client-details>
     </router-view>
+    <Dialog :show="successDeletion" title="Success!" @close="closeDialog">
+      <h3>This client has been successfully deleted!</h3>
+      <template v-slot:buttonText>Close</template>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import ClientDetails from "./ClientDetails";
 import Wrapper from "../UI/Wrapper";
+import Dialog from "../UI/Dialog";
 export default {
   name: "ClientsList",
   components:{
     Wrapper,
     ClientDetails,
+    Dialog
   },
   computed:{
     clients(){
       return this.$store.getters['clients'];
+    },
+    successDeletion(){
+      return this.$store.getters.successDeletion;
     }
   },
   methods:{
+    closeDialog(){
+      this.$store.dispatch('setSuccessDeletion');
+    },
     async loadClients() {
       try {
         await this.$store.dispatch('loadClients');
