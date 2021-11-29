@@ -99,6 +99,23 @@ export default {
         }
         context.commit('setItemNames', itemNames);
     },
+    async deactivateItem(context,data){
+        const itemId = data;
+        await context.dispatch('setItem', {id: itemId});
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/equipment/${itemId}/status.json`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(false)
+            }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+
+        context.commit('deactivateItem', itemId);
+    },
 
 
 }

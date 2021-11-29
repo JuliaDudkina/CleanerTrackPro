@@ -15,4 +15,9 @@ export default {
     setItemNames(state,payload){
         state.itemNames = payload;
     },
+    deactivateItem(state, payload){
+        const itemId = payload;
+        const chosen = state.equipment.find(item => item.id === itemId);
+        chosen.status = false;
+    }
 }
