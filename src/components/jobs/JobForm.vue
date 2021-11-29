@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="form-control">
+      <div class="form-control flex">
         <label>Status:</label>
         <select v-model="status">
           <option>Active</option>

@@ -15,4 +15,9 @@ export default {
     loadEmployeesJobs(state,payload) {
         state.employeesJobs = payload;
     },
+    deactivateJob(state, payload){
+        const jobId = payload;
+        const chosen = state.jobs.find(job => job.id === jobId);
+        chosen.status = false;
+    }
 }

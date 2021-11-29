@@ -40,7 +40,7 @@
           </div>
           <div class="flex">
             <h3>Status:</h3>
-            <p>{{ status }}</p>
+            <p>{{ stringStatus }}</p>
           </div>
         </div>
         <div class="actions">
@@ -49,12 +49,18 @@
         </div>
       </wrapper>
     </li>
-    <Dialog @close="deleteJob" :show="isConfirm" title="Are you sure you want to delete this job?">
-      <h3>This job will be deleted immediately. You cannot undo this action.</h3>
+    <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this job?">
+      <h3 v-if="!status">This job will be deleted immediately. You cannot undo this action.</h3>
+      <h3 v-if="status">This job is active and cannot be deleted.</h3>
+      <template v-slot:buttonText>Cancel</template>
       <template v-slot:actions>
-        <link-button @click="closeConfirmation">Cancel</link-button>
+        <link-button v-if="!status" @click="deleteJob">Delete anyway</link-button>
+        <link-button v-if="status" @click="deactivate">Deactivate</link-button>
       </template>
-      <template v-slot:buttonText>Delete</template>
+    </Dialog>
+    <Dialog :show="successDeactivation" title="Success!" @close="closeDialog">
+      <h3>This job has been successfully deactivated!</h3>
+      <template v-slot:buttonText>Close</template>
     </Dialog>
   </div>
 </template>
@@ -68,6 +74,7 @@ export default {
   data(){
     return{
       isConfirm: false,
+      successDeactivation: false
     }
   },
   computed:{
@@ -77,7 +84,13 @@ export default {
       }else{
         return 'No';
       }
-    }
+    },
+    stringStatus(){
+      if (this.status) {
+        return 'Active'
+      }
+      return 'Inactive';
+    },
   },
   methods: {
     confirm(){
@@ -86,10 +99,20 @@ export default {
     closeConfirmation(){
       this.isConfirm = false;
     },
+    deactivate(){
+      const jobId = this.id;
+      this.$store.dispatch('deactivateJob', jobId);
+      this.isConfirm = false;
+      this.successDeactivation = true;
+    },
+    closeDialog(){
+      this.successDeactivation = false;
+    },
     deleteJob() {
       const jobID = this.id;
       this.$store.dispatch('deleteJob', jobID);
       this.isConfirm = false;
+      this.$store.dispatch('setSuccessDeletion');
     },
     updateJob(){
       const oldJob = {
@@ -101,7 +124,7 @@ export default {
         fee: this.fee,
         employee: this.employee,
         equipment: this.equipment,
-        status: this.status
+        status: this.stringStatus
       }
       this.$store.dispatch('setOldJob',oldJob);
       this.$router.replace('/jobs/update');

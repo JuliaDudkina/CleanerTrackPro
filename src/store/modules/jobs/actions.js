@@ -126,4 +126,20 @@ export default {
         }
         context.commit('loadEmployeesJobs',jobs);
     },
+    async deactivateJob(context,data){
+        const jobId = data;
+        const response = await fetch(
+            `https://cleanertrackpro-default-rtdb.firebaseio.com/jobs/${jobId}/status.json`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(false)
+            }
+        )
+        if (!response.ok) {
+            const error = new Error(response.message || 'Failed.Try Later');
+            throw error;
+        }
+
+        context.commit('deactivateJob', jobId);
+    },
 }
