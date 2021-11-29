@@ -19,13 +19,16 @@
       </div>
     </wrapper>
     <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this client?">
-      <h3>This client will be deleted immediately along with their worksites.<br>
+      <h3 v-if="status">This client is active. They will be deleted immediately along with their worksites.
         You cannot undo this action.<br>
-        <p v-if="status">If you want to save data, select deactivation instead.</p>
+        If you want to save data, select deactivation instead.
+      </h3>
+      <h3 v-else>This client will be deleted immediately along with their worksites.<br>
+        You cannot undo this action.
       </h3>
       <template v-slot:buttonText>Cancel</template>
       <template v-slot:actions>
-        <link-button @click="deleteClient">Delete</link-button>
+        <link-button @click="deleteClient">Delete anyway</link-button>
         <link-button v-if="status" @click="deactivate">Deactivate</link-button>
       </template>
     </Dialog>
