@@ -1,7 +1,6 @@
 <template>
-  <div>
     <li>
-      <wrapper class="flex">
+      <wrapper class="flex" :class="{scrollToMe: changed}">
         <div>
           <div>
             <h1>{{ name }}</h1>
@@ -23,21 +22,20 @@
           <link-button @click="loadJobs">Jobs</link-button>
         </div>
       </wrapper>
+      <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this employee?">
+        <h3 v-if="!status">This employee will be deleted immediately. You cannot undo this action.</h3>
+        <h3 v-if="status">This employee is active and cannot be deleted.</h3>
+        <template v-slot:buttonText>Cancel</template>
+        <template v-slot:actions>
+          <link-button v-if="!status" @click="deleteEmployee">Delete anyway</link-button>
+          <link-button v-if="status" @click="deactivate">Deactivate</link-button>
+        </template>
+      </Dialog>
+      <Dialog :show="successDeactivation" title="Success!" @close="closeDialog">
+        <h3>This employee has been successfully deactivated!</h3>
+        <template v-slot:buttonText>Close</template>
+      </Dialog>
     </li>
-    <Dialog @close="closeConfirmation" :show="isConfirm" title="Are you sure you want to delete this employee?">
-      <h3 v-if="!status">This employee will be deleted immediately. You cannot undo this action.</h3>
-      <h3 v-if="status">This employee is active and cannot be deleted.</h3>
-      <template v-slot:buttonText>Cancel</template>
-      <template v-slot:actions>
-        <link-button v-if="!status" @click="deleteEmployee">Delete anyway</link-button>
-        <link-button v-if="status" @click="deactivate">Deactivate</link-button>
-      </template>
-    </Dialog>
-    <Dialog :show="successDeactivation" title="Success!" @close="closeDialog">
-      <h3>This employee has been successfully deactivated!</h3>
-      <template v-slot:buttonText>Close</template>
-    </Dialog>
-  </div>
 </template>
 
 <script>
@@ -50,6 +48,7 @@ export default {
     return{
       isConfirm: false,
       successDeactivation: false,
+      changed: false
     }
   },
   computed:{
@@ -104,7 +103,36 @@ export default {
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
+    },
+    scrollToElement() {
+      const el = document.querySelector('.scrollToMe');
+      if (el) {
+        el.scrollIntoView({behavior: 'smooth'});
+      }
     }
+  },
+  watch: {
+    name() {
+      this.changed = true;
+    },
+    salary() {
+      this.changed = true;
+    },
+    birthDate() {
+      this.changed = true;
+    },
+    stringStatus() {
+      this.changed = true;
+    },
+    phone() {
+      this.changed = true;
+    },
+    address() {
+      this.changed = true;
+    }
+  },
+  updated() {
+    this.scrollToElement();
   }
 }
 </script>
@@ -118,5 +146,20 @@ export default {
 .inline{
   display: flex;
   align-items: center;
+}
+@keyframes highlight {
+  from {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+  50% {
+    box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+}
+.scrollToMe{
+  animation-duration: 3s;
+  animation-name: highlight;
 }
 </style>
