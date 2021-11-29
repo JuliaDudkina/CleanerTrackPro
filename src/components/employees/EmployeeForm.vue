@@ -29,6 +29,14 @@
       </div>
       <p v-if="!birthDate.isValid">Birth Date cannot be empty!</p>
       <p v-if="!salary.isValid">Salary cannot be empty, zero or less!</p>
+      <div class="form-control flex" :class="{invalid: !status.isValid}">
+        <label>Status:</label>
+        <select v-model="status.val" @blur="clearValidity('chosenEmployee')">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+      <p v-if="!status.isValid">Please select employee's status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -39,7 +47,7 @@ import Wrapper from "../UI/Wrapper";
 export default {
   name: "AddEmployee",
   components: {Wrapper},
-  props: ['oldFullName','oldPhone','oldBirthDate','oldSalary','oldAddress'],
+  props: ['oldFullName','oldPhone','oldBirthDate','oldSalary','oldAddress', 'oldStatus'],
   data(){
     return{
       fullName: {
@@ -62,6 +70,10 @@ export default {
         val: this.oldAddress || '',
         isValid: true,
       },
+      status: {
+        val: this.oldStatus || '',
+        isValid: true,
+      }
     }
   },
   methods:{
@@ -90,6 +102,10 @@ export default {
         this.phone.isValid = false;
         this.formIsValid = false;
       }
+      if (!this.status.val){
+        this.status.isValid = false;
+        this.formIsValid = false;
+      }
     },
     action(){
       this.validateForm();
@@ -102,6 +118,7 @@ export default {
         salary: this.salary.val,
         birthDate: this.birthDate.val,
         address: this.address.val,
+        status: this.status.val,
       }
       this.$emit('action',newEmployee);
     }

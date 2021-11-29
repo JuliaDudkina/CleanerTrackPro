@@ -10,6 +10,7 @@
                    :old-phone="oldEmployee.phone"
                    :old-address="oldEmployee.address"
                    :old-salary="oldEmployee.salary"
+                   :old-status="oldEmployee.status"
     >
       <template v-slot:title>
         <h2>Update the employee</h2>
@@ -40,7 +41,7 @@ export default {
   methods:{
     update(data){
       this.success = true;
-      const updatedEmployee = data;
+      const updatedEmployee = {...data};
       this.$store.dispatch('updateEmployee', updatedEmployee);
     },
     closeDialog(){

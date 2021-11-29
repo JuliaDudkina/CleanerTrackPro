@@ -32,7 +32,7 @@ export default {
   methods:{
     submitData(data){
       this.success = true;
-      const newEmployee = data;
+      const newEmployee = {...data};
       this.$store.dispatch('addEmployee', newEmployee);
     },
     closeDialog(){

@@ -20,6 +20,7 @@ export default {
                 salary: responseData[key].salary,
                 birthDate: responseData[key].birthDate,
                 address: responseData[key].address,
+                status: responseData[key].status,
             }
             employees.unshift(employee);
         }
@@ -33,6 +34,7 @@ export default {
             salary: data.salary,
             birthDate: data.birthDate,
             address: data.address,
+            status: data.status,
         };
 
         const response = await fetch(
@@ -90,7 +92,8 @@ export default {
             address: data.address,
             phone: data.phone,
             salary: data.salary,
-            birthDate: data.birthDate
+            birthDate: data.birthDate,
+            status: data.status,
         };
         const response = await fetch(
             `https://cleanertrackpro-default-rtdb.firebaseio.com/employees/${employeeId}.json`,

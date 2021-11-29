@@ -14,6 +14,7 @@
           :address="employee.address"
           :birth-date="employee.birthDate"
           :salary="employee.salary"
+          :status="employee.status"
       ></employees-details>
     </ul>
   </div>

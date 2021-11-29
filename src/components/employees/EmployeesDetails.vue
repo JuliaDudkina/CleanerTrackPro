@@ -13,6 +13,9 @@
             <p>Address:</p>
             <address> {{ address }}</address>
           </div>
+          <div class="inline">
+            <p>Status: {{ status }}</p>
+          </div>
         </div>
         <div>
           <link-button @click="updateEmployee">Update</link-button>
@@ -36,7 +39,7 @@ import Dialog from "../UI/Dialog";
 export default {
   name: "EmployeesDetails",
   components: {Dialog},
-  props: ['id','name', 'phone', 'salary', 'birthDate', 'address'],
+  props: ['id','name', 'phone', 'salary', 'birthDate', 'address', 'status'],
   data(){
     return{
       isConfirm: false,
@@ -61,6 +64,7 @@ export default {
         salary: this.salary,
         birthDate: this.birthDate,
         address: this.address,
+        status: this.status,
       }
       this.$store.dispatch('setEmployee', employee);
       this.$router.replace('/employees/update');
