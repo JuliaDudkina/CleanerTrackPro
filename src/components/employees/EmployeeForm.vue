@@ -31,7 +31,7 @@
       <p v-if="!salary.isValid">Salary cannot be empty, zero or less!</p>
       <div class="form-control flex" :class="{invalid: !status.isValid}">
         <label>Status:</label>
-        <select v-model="status.val" @blur="clearValidity('chosenEmployee')">
+        <select v-model="status.val" @blur="clearValidity('status')">
           <option>Active</option>
           <option>Inactive</option>
         </select>
