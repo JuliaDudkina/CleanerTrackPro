@@ -38,6 +38,10 @@
               </li>
             </ul>
           </div>
+          <div class="flex">
+            <h3>Status:</h3>
+            <p>{{ status }}</p>
+          </div>
         </div>
         <div class="actions">
           <link-button class="m-b" @click="updateJob">Update</link-button>
@@ -60,7 +64,7 @@ import Wrapper from "../UI/Wrapper";
 import Dialog from "../UI/Dialog";
 export default {
   components: {Wrapper, Dialog},
-  props:['id','startDate', 'endDate', 'type', 'hazard', 'fee', 'employee', 'equipment'],
+  props:['id','startDate', 'endDate', 'type', 'hazard', 'fee', 'employee', 'equipment', 'status'],
   data(){
     return{
       isConfirm: false,
@@ -97,6 +101,7 @@ export default {
         fee: this.fee,
         employee: this.employee,
         equipment: this.equipment,
+        status: this.status
       }
       this.$store.dispatch('setOldJob',oldJob);
       this.$router.replace('/jobs/update');

@@ -33,7 +33,7 @@ export default {
   methods:{
     addJob(data){
       this.success = true;
-      const newJob = data;
+      const newJob = {...data};
       this.$store.dispatch('addJob',newJob);
     },
     closeDialog(){

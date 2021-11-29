@@ -8,6 +8,7 @@ export default {
             fee: data.fee,
             chosenEmployee: data.chosenEmployee,
             equipment: data.equipment,
+            status: data.status
         };
 
         const response = await fetch(
@@ -50,6 +51,7 @@ export default {
                 fee: responseData[key].fee,
                 chosenEmployee: responseData[key].chosenEmployee,
                 equipment: responseData[key].equipment,
+                status: responseData[key].status
             }
             jobs.unshift(job);
         }
@@ -84,6 +86,7 @@ export default {
             fee: data.fee,
             chosenEmployee: data.employee,
             equipment: data.equipment,
+            status: data.status
         }
         const response = await fetch(`https://cleanertrackpro-default-rtdb.firebaseio.com/jobs/${jobId}.json`,{
             method: "PUT",
@@ -115,6 +118,7 @@ export default {
                 fee: responseData[key].fee,
                 chosenEmployee: responseData[key].chosenEmployee,
                 equipment: responseData[key].equipment,
+                status: responseData[key].status
             }
             if(job.chosenEmployee === employee){
                 jobs.unshift(job);

@@ -12,6 +12,7 @@
               :old-hazard="oldJob.hazard"
               :old-equipment="oldJob.equipment"
               :old-chosen-employee="oldJob.employee"
+              :old-status="oldJob.status"
     >
       <template v-slot:title>
         <h2>Update this job</h2>
@@ -53,6 +54,7 @@ export default {
         fee: data.fee,
         employee: data.chosenEmployee,
         equipment: data.equipment,
+        status: data.status
       }
       this.$store.dispatch('updateJob', newJob);
     },

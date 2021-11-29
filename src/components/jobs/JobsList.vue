@@ -15,6 +15,7 @@
                    :employee="job.chosenEmployee"
                    :equipment="job.equipment"
                    :hazard="job.hazard"
+                   :status="job.status"
       >
       </job-details>
     </ul>

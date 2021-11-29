@@ -47,6 +47,13 @@
           </div>
         </div>
       </div>
+      <div class="form-control flex" :class="{invalid: !status.isValid}">
+        <label>Status:</label>
+        <select v-model="status.val" @blur="clearValidity('status')">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -55,7 +62,7 @@
 <script>
 export default {
   name: "JobForm",
-  props: ['oldStartDate', 'oldType', 'oldEndDate', 'oldHazard', 'oldFee', 'oldChosenEmployee', 'oldEquipment'],
+  props: ['oldStartDate', 'oldType', 'oldEndDate', 'oldHazard', 'oldFee', 'oldChosenEmployee', 'oldEquipment', 'oldStatus'],
   data(){
     return{
       startDate:{
@@ -77,6 +84,10 @@ export default {
       },
       chosenEmployee:{
         val: this.oldChosenEmployee || '',
+        isValid: true,
+      },
+      status:{
+        val: this.oldStatus || '',
         isValid: true,
       },
       equipment: this.oldEquipment || [],
@@ -126,6 +137,10 @@ export default {
         this.chosenEmployee.isValid = false;
         this.formIsValid = false;
       }
+      if (this.status.val === ''){
+        this.status.isValid = false;
+        this.formIsValid = false;
+      }
       if (!this.fee.val || this.fee.val < 0){
         this.fee.isValid = false;
         this.formIsValid = false;
@@ -144,6 +159,7 @@ export default {
         fee: this.fee.val,
         chosenEmployee: this.chosenEmployee.val,
         equipment: this.equipment,
+        status: this.status.val
       }
       this.$emit('action',newJob);
     }
