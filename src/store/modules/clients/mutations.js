@@ -11,5 +11,10 @@ export default {
     },
     setClient(state, payload){
         state.client = payload;
+    },
+    deactivateClient(state, payload){
+        const clientId = payload;
+        const chosen = state.clients.find(client => client.id === clientId);
+        chosen.status = false;
     }
 };
