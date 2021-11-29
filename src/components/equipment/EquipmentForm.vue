@@ -17,7 +17,7 @@
         <input type="text" id="storage" v-model="storage.val" @blur="clearValidity('storage')">
       </div>
       <p v-if="!storage.isValid">Storage cannot empty!</p>
-      <div class="form-control">
+      <div class="form-control flex">
         <label>Status:</label>
         <select v-model="status">
           <option>Active</option>
