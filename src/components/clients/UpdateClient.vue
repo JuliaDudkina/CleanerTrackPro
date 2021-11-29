@@ -9,6 +9,7 @@
                :old-phone="oldClient.phone"
                :old-contact-person="oldClient.contactPerson"
                :old-type="oldClient.type"
+               :old-status="oldClient.status"
   >
     <template v-slot:title>
       <h2>Update the client</h2>
@@ -41,13 +42,7 @@ export default {
   methods:{
     update(data){
       this.success = true;
-      const updatedClient = {
-        name: data.name,
-        address: data.address,
-        phone: data.phone,
-        contactPerson: data.contactPerson,
-        type: data.type,
-      };
+      const updatedClient = {...data};
       this.$store.dispatch('updateClient', updatedClient);
     },
     closeDialog(){

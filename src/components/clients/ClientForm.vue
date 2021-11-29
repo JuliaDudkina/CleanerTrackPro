@@ -29,7 +29,15 @@
           <option value="individual">an individual</option>
         </select>
       </div>
-      <p v-if="!type.isValid">Please select client's status!</p>
+      <p v-if="!type.isValid">Please select client's type!</p>
+      <div class="flex" :class="{invalid: !status.isValid}">
+        <label>Status:</label>
+        <select v-model="status.val" @blur="clearValidity('status')">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+      <p v-if="!status.isValid">Please select client's status!</p>
       <slot name="button"></slot>
     </form>
   </wrapper>
@@ -40,7 +48,7 @@ import Wrapper from "../UI/Wrapper";
 export default {
   name: "AddClient",
   components: {Wrapper},
-  props: ['oldName','oldAddress','oldPhone','oldContactPerson','oldType'],
+  props: ['oldName','oldAddress','oldPhone','oldContactPerson','oldType', 'oldStatus'],
   data(){
     return{
       name: {
@@ -61,6 +69,10 @@ export default {
       },
       type:{
         val: this.oldType || '',
+        isValid: true
+      },
+      status:{
+        val: this.oldStatus || '',
         isValid: true
       },
       formIsValid: true,
@@ -88,6 +100,10 @@ export default {
         this.type.isValid = false;
         this.formIsValid = false;
       }
+      if (this.status.val === ''){
+        this.status.isValid = false;
+        this.formIsValid = false;
+      }
       if (!this.phone.val){
         this.phone.isValid = false;
         this.formIsValid = false;
@@ -103,7 +119,8 @@ export default {
         address: this.address.val,
         phone: this.phone.val,
         contactPerson: this.contactPerson.val,
-        type: this.type.val
+        type: this.type.val,
+        status: this.status.val
       }
       this.$emit('action',newClient)
     }

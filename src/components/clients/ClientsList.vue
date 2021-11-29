@@ -14,6 +14,7 @@
           :phone="client.phone"
           :contact-person="client.contactPerson"
           :type="client.type"
+          :status="client.status"
       ></client-details>
     </router-view>
   </div>

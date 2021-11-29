@@ -32,7 +32,7 @@ export default {
   methods:{
     submitData(data){
       this.success = true;
-      const newClient = data;
+      const newClient = {...data};
       this.$store.dispatch('addClient', newClient);
     },
     closeDialog(){

@@ -5,7 +5,8 @@ export default {
             address: data.address,
             phone: data.phone,
             contactPerson: data.contactPerson,
-            type: data.type
+            type: data.type,
+            status: data.status
         }
         const response = await fetch(
             'https://cleanertrackpro-default-rtdb.firebaseio.com/clients.json',
@@ -30,7 +31,8 @@ export default {
             address: data.address,
             phone: data.phone,
             contactPerson: data.contactPerson,
-            type: data.type
+            type: data.type,
+            status: data.status
         };
         const response = await fetch(
             `https://cleanertrackpro-default-rtdb.firebaseio.com/clients/${clientId}.json`,
@@ -65,6 +67,7 @@ export default {
                 phone: responseData[key].phone,
                 contactPerson: responseData[key].contactPerson,
                 type: responseData[key].type,
+                status: responseData[key].status
             };
             clients.unshift(client);
         }

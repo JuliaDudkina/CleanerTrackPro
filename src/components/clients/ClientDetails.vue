@@ -3,15 +3,14 @@
     <wrapper>
       <div>
         <h1>{{ name }}</h1>
-        <div>
-          <p>Contact phone: <a :href="'tel:' + phone">{{ phone }}</a></p>
-          <p>Contact person: {{ contactPerson }}</p>
-          <p>Type: {{ type }}</p>
-          <div class="address">
-            <p>Primary office address: </p>
-            <address> {{ address }}</address>
-          </div>
+        <p>Contact phone: <a :href="'tel:' + phone">{{ phone }}</a></p>
+        <p>Contact person: {{ contactPerson }}</p>
+        <p>Type: {{ type }}</p>
+        <div class="address">
+          <p>Primary office address: </p>
+          <address> {{ address }}</address>
         </div>
+        <p>Status: {{ status }}</p>
       </div>
       <div>
         <link-button @click="updateClient">Update</link-button>
@@ -39,7 +38,7 @@ import Dialog from "../UI/Dialog";
 export default {
   name: "ClientDetails",
   components: {Wrapper,Dialog},
-  props: ['id','name','address', 'phone', 'contactPerson', 'type'],
+  props: ['id','name','address', 'phone', 'contactPerson', 'type', 'status'],
   data(){
     return{
       isConfirm: false,
@@ -70,6 +69,7 @@ export default {
         phone: this.phone,
         contactPerson: this.contactPerson,
         type: this.type,
+        status: this.status
       }
       this.$store.dispatch('setClient', client);
       const url = '/client/' + this.id + '/update';
