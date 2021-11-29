@@ -19,22 +19,34 @@
       >
       </job-details>
     </ul>
+    <Dialog :show="successDeletion" title="Success!" @close="closeDialog">
+      <h3>This job has been successfully deleted!</h3>
+      <template v-slot:buttonText>Close</template>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import JobDetails from "./JobDetails";
+import Dialog from "../UI/Dialog";
 export default {
   name: "WorksiteList",
   components:{
-    JobDetails
+    JobDetails,
+    Dialog
   },
   computed:{
     jobs(){
       return this.$store.getters.jobs;
+    },
+    successDeletion(){
+      return this.$store.getters.successDeletion;
     }
   },
   methods:{
+    closeDialog(){
+      this.$store.dispatch('setSuccessDeletion');
+    },
     async loadJobs(){
       try {
         await this.$store.dispatch('loadJobs');

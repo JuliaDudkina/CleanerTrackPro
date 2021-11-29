@@ -21,15 +21,20 @@
         <h2>This client does not have any worksites yet.</h2>
       </wrapper>
     </div>
+    <Dialog :show="successDeletion" title="Success!" @close="closeDialog">
+      <h3>This worksite has been successfully deleted!</h3>
+      <template v-slot:buttonText>Close</template>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import WorksiteDetails from "./WorksiteDetails";
 import Wrapper from "../UI/Wrapper";
+import Dialog from "../UI/Dialog";
 export default {
   name: "WorksitesList",
-  components:{Wrapper, WorksiteDetails},
+  components:{Wrapper, WorksiteDetails, Dialog},
   computed: {
     clientWorksites(){
       return this.$store.getters.clientWorksites;
@@ -37,8 +42,16 @@ export default {
     addWorksiteLink(){
       const link = this.$route.path + '/register';
       return link;
+    },
+    successDeletion(){
+      return this.$store.getters.successDeletion;
     }
   },
+  methods:{
+    closeDialog(){
+      this.$store.dispatch('setSuccessDeletion');
+    },
+  }
 }
 </script>
 

@@ -16,21 +16,32 @@
       >
       </equipment-details>
     </ul>
+    <Dialog :show="successDeletion" title="Success!" @close="closeDialog">
+      <h3>This equipment has been successfully deleted!</h3>
+      <template v-slot:buttonText>Close</template>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import Wrapper from "../UI/Wrapper";
 import EquipmentDetails from "./EquipmentDetails";
+import Dialog from "../UI/Dialog";
 export default {
   name: "EquipmentList",
-  components: {Wrapper, EquipmentDetails},
+  components: {Wrapper, EquipmentDetails, Dialog},
   computed:{
     equipment(){
       return this.$store.getters.equipment;
+    },
+    successDeletion(){
+      return this.$store.getters.successDeletion;
     }
   },
   methods:{
+    closeDialog(){
+      this.$store.dispatch('setSuccessDeletion');
+    },
     async loadEquipment(){
       try {
         await this.$store.dispatch('loadEquipment');

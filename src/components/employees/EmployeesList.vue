@@ -17,20 +17,31 @@
           :status="employee.status"
       ></employees-details>
     </ul>
+    <Dialog :show="successDeletion" title="Success!" @close="closeDialog">
+      <h3>This employee has been successfully deleted!</h3>
+      <template v-slot:buttonText>Close</template>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import EmployeesDetails from "./EmployeesDetails";
+import Dialog from "../UI/Dialog";
 export default {
   name: "EmployeesList",
-  components: {EmployeesDetails},
+  components: {EmployeesDetails, Dialog},
   computed: {
     employees(){
       return this.$store.getters.employees;
+    },
+    successDeletion(){
+      return this.$store.getters.successDeletion;
     }
   },
   methods:{
+    closeDialog(){
+      this.$store.dispatch('setSuccessDeletion');
+    },
     async loadEmployees() {
       try {
         await this.$store.dispatch('loadEmployees');
