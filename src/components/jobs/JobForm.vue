@@ -2,7 +2,7 @@
   <wrapper>
     <form @submit.prevent="action">
       <slot name="title"></slot>
-      <div class="flex" :class="{invalid: !type.isValid}">
+      <div class="form-control flex" :class="{invalid: !type.isValid}">
         <label>Type of work:</label>
         <select v-model="type.val" @blur="clearValidity('type')">
           <option value="Office cleaning">Office cleaning</option>
@@ -234,5 +234,45 @@ ul{
 }
 .margin{
   margin-right: 15px;
+}
+select {
+  /* Reset */
+  appearance: none;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 15em;
+  height: 1.5em;
+  padding: 0 0 0 0.5em;
+  background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.8em center / 1.4em,
+  linear-gradient(to left, rgba(85, 189, 138, 1) 3em, rgba(252, 250, 250, 0.2) 3em);
+  color: black;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+/* <option> colors */
+option {
+  color: inherit;
+  background-color: #320a28;
+}
+/* Remove focus outline */
+option:focus {
+  outline: none;
+}
+/* Remove IE arrow */
+option::-ms-expand {
+  display: none;
+}
+.flex.margin{
+  align-items: flex-start;
+}
+.flex.margin label{
+  font-weight: normal;
+}
+.form-control.flex label{
+  margin-right: 10px;
+}
+.flex .form-control{
+  margin-right: 25px;
 }
 </style>

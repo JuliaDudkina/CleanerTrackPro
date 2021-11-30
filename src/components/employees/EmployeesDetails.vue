@@ -138,6 +138,9 @@ export default {
 </script>
 
 <style scoped>
+p{
+  margin: 10px 0;
+}
 .flex{
   display: flex;
   justify-content: space-around;
@@ -145,7 +148,10 @@ export default {
 }
 .inline{
   display: flex;
-  align-items: center;
+  align-items: baseline;
+}
+.inline p{
+  margin: 0 5px 10px 0;
 }
 @keyframes highlight {
   from {

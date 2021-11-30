@@ -6,7 +6,7 @@
     </wrapper>
     <ul>
       <job-details v-for="job in jobs"
-                   :key="job.type"
+                   :key="job.id"
                    :id="job.id"
                    :start-date="job.startDate"
                    :end-date="job.endDate"

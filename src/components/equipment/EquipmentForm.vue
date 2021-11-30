@@ -132,4 +132,36 @@ input[type='number'] {
 .invalid input{
   border: 1px solid red;
 }
+/* <select> styles */
+select {
+  /* Reset */
+  appearance: none;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 10em;
+  height: 1.5em;
+  padding: 0 0 0 0.5em;
+  background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.8em center / 1.4em,
+  linear-gradient(to left, rgba(85, 189, 138, 1) 3em, rgba(252, 250, 250, 0.2) 3em);
+  color: black;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+/* <option> colors */
+option {
+  color: inherit;
+  background-color: #320a28;
+}
+/* Remove focus outline */
+option:focus {
+  outline: none;
+}
+/* Remove IE arrow */
+option::-ms-expand {
+  display: none;
+}
+.form-control.flex label{
+  margin-right: 10px;
+}
 </style>

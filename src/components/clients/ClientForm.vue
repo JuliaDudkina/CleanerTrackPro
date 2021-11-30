@@ -22,15 +22,15 @@
         <input type="text" id="person" v-model.trim="contactPerson.val" @blur="clearValidity('contactPerson')">
       </div>
       <p v-if="!contactPerson.isValid">Contact Person cannot be empty!</p>
-      <div class="flex" :class="{invalid: !type.isValid}">
-        <label>Client's type:</label>
+      <div class="form-control flex" :class="{invalid: !type.isValid}">
+        <label>Client's Type:</label>
         <select v-model="type.val" @blur="clearValidity('type')">
           <option value="corporate">a company</option>
           <option value="individual">an individual</option>
         </select>
       </div>
       <p v-if="!type.isValid">Please select client's type!</p>
-      <div class="flex">
+      <div class="form-control flex">
         <label>Status:</label>
         <select v-model="status">
           <option>Active</option>
@@ -175,4 +175,40 @@ h3 {
   display: flex;
   align-items: baseline;
 }
+.flex label{
+  margin-right: 10px;
+}
+
+
+/* <select> styles */
+select {
+  /* Reset */
+  appearance: none;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 10em;
+  height: 1.5em;
+  padding: 0 0 0 0.5em;
+  background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.8em center / 1.4em,
+  linear-gradient(to left, rgba(85, 189, 138, 1) 3em, rgba(252, 250, 250, 0.2) 3em);
+  color: black;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+/* <option> colors */
+option {
+  color: inherit;
+  background-color: #320a28;
+}
+/* Remove focus outline */
+option:focus {
+   outline: none;
+}
+/* Remove IE arrow */
+option::-ms-expand {
+   display: none;
+}
+
+
 </style>
