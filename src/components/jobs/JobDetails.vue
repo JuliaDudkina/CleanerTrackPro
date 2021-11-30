@@ -1,7 +1,7 @@
 <template>
   <div>
     <li>
-      <wrapper class="wrapper">
+      <wrapper class="wrapper" :class="{scrollToMe: changed}">
         <div>
           <div class="flex">
             <div class="flex m-r">
@@ -74,7 +74,8 @@ export default {
   data(){
     return{
       isConfirm: false,
-      successDeactivation: false
+      successDeactivation: false,
+      changed: false
     }
   },
   computed:{
@@ -128,7 +129,39 @@ export default {
       }
       this.$store.dispatch('setOldJob',oldJob);
       this.$router.replace('/jobs/update');
+    },
+    scrollToElement() {
+      const el = document.querySelector('.scrollToMe');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
+  },
+  watch:{
+    hazard(){
+      this.changed = true;
+    },
+    startDate(){
+      this.changed = true;
+    },
+    endDate(){
+      this.changed = true;
+    },
+    fee(){
+      this.changed = true;
+    },
+    employee(){
+      this.changed = true;
+    },
+    type(){
+      this.changed = true;
+    },
+    stringStatus(){
+      this.changed = true;
+    }
+  },
+  updated() {
+    this.scrollToElement();
   }
 }
 </script>
@@ -155,5 +188,20 @@ h3,p {
 }
 .m-b{
   margin-bottom: 10px;
+}
+@keyframes highlight {
+  from {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+  50% {
+    box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+}
+.wrapper.scrollToMe{
+  animation-duration: 3s;
+  animation-name: highlight;
 }
 </style>
